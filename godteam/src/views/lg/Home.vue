@@ -3,7 +3,7 @@
 
 
 
-      <div style="text-align: left;margin-left: 15%;width: 300px;height: 600px;float: left;border: 0px solid red">
+      <div style="text-align: left;margin-left: 13%;width: 300px;height: 600px;float: left;border: 0px solid red">
 
         <el-carousel height="150px">
           <el-carousel-item v-for="item in imgList" :key="item">
@@ -24,7 +24,7 @@
         <span style="margin-left: 180px"><a href="#" class="smallDai" >了解更多>>></a></span>
       </div>
 
-    <div style="text-align: left;width: 700px;margin-top:10px;margin-left:5%;float: left;border: 1px  red">
+    <div style="text-align: left;width: 700px;margin-top:10px;margin-left:4%;float: left;border: 1px  red">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/about' }">当前位置：首页</el-breadcrumb-item>
     </el-breadcrumb>
@@ -86,7 +86,7 @@
       </div>
     </div>
 
-    <div style="text-align: left;margin-left: 17%;width: 1110px;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
+    <div style="text-align: left;margin-left: 15%;width: 1110px;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
       <h1>理财产品</h1>
     </div>
 
