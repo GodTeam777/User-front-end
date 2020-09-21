@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-      <div style="text-align: left;margin-left: 100px;width: 300px;height: 600px;float: left;border: 0px solid red">
+
+
+
+      <div style="text-align: left;margin-left: 15%;width: 300px;height: 600px;float: left;border: 0px solid red">
 
         <el-carousel height="150px">
           <el-carousel-item v-for="item in imgList" :key="item">
@@ -21,7 +24,7 @@
         <span style="margin-left: 180px"><a href="#" class="smallDai" >了解更多>>></a></span>
       </div>
 
-    <div style="text-align: left;width: 700px;margin-top:10px;margin-left:10px;float: left;border: 1px  red">
+    <div style="text-align: left;width: 700px;margin-top:10px;margin-left:5%;float: left;border: 1px  red">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/about' }">当前位置：首页</el-breadcrumb-item>
     </el-breadcrumb>
@@ -29,9 +32,9 @@
 
     </div>
 
-    <div v-show="this.$store.state.user.uid<0" style="border-radius: 8px;background-color: #409EFF;text-align: left;margin-left: 10px;width: 700px;height: 200px;float: left;border: 1px  blue">
+    <div v-show="this.$store.state.user.uid<0" style="border-radius: 8px;background-color: #409EFF;text-align: left;margin-left: 5%;width: 800px;height: 200px;float: left;border: 1px  blue">
       <br/>
-      <div style="margin-left: 20px">
+      <div style="margin-left: 5%">
       <span style="font-size: 25px;font-weight: 600;color: Window">小额随心贷</span><br/>
       <span style="color: #666666">最高可借额度(元)</span><br>
       <h1 style="color: Window">50,000.00</h1><br>
@@ -40,9 +43,9 @@
       </div>
     </div>
 
-    <div v-show="this.$store.state.user.uid>0" style="border-radius: 8px;background-color: #409EFF;text-align: left;margin-left: 10px;width: 700px;height: 200px;float: left;border: 1px  blue">
+    <div v-show="this.$store.state.user.uid>0" style="border-radius: 8px;background-color: #409EFF;text-align: left;margin-left:5%;width: 800px;height: 200px;float: left;border: 1px  blue">
       <br/>
-      <div style="margin-left: 20px">
+      <div style="margin-left: 5%">
         <span style="font-size: 25px;font-weight: 600;color: Window">小额随心贷</span><br/>
         <span style="color: #666666">当前额度：</span><br>
         <h1 style="color: Window">3,000.00</h1>
@@ -55,7 +58,7 @@
       </div>
     </div>
 
-    <div style="text-align: left;margin-left: 10px;width: 800px;margin-top: 10px;height: 350px;float: left;border: 1px  blue">
+    <div style="text-align: left;margin-left: 5%;width: 800px;margin-top: 10px;height: 350px;float: left;border: 1px  blue">
       <div style="height: 30px;background-color: #409EFF;color: Window;display: flex;align-items:center"><span style="margin-left: 10px">融资产品</span></div>
 
       <div v-for="dai in bigdai" style="float: left;font-size: 14px;margin-top: 18px;">
@@ -83,11 +86,11 @@
       </div>
     </div>
 
-    <div style="text-align: left;margin-left: 100px;width: 1110px;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
+    <div style="text-align: left;margin-left: 17%;width: 1110px;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
       <h1>理财产品</h1>
     </div>
 
-    <div style="position: fixed;margin-top: 300px;margin-left: 1220px"><a href="#"><img src="../../assets/在线客服.png"></a></div>
+    <div style="position: fixed;margin-top: 18%;margin-left: 92%"><a href="#"><img src="../../assets/在线客服.png"></a></div>
     <Bottom></Bottom>
   </div>
 </template>

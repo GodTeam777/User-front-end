@@ -48,7 +48,9 @@
                 rangeStatus: false
             }
         },
+
         methods:{
+
             //滑块移动
             rangeMove(e){
                 let ele = e.target;
@@ -78,8 +80,11 @@
                         ele.style.transform = 'translateX(0)';
                         //执行成功的函数
                         this.errorFun && this.errorFun();
+
                     }else{
                         this.rangeStatus = true;
+                        this.$emit('childByValue', this.rangeStatus)
+
                         if(this.status){
                             this.$parent[this.status] = true;
                         }
