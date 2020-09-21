@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div style="text-align: left;margin-left: 100px;width: 1110px;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
+    <div style="text-align: left;margin-left: 100px;width: 83%;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
       <h1>理财产品</h1>
     </div>
 
