@@ -18,7 +18,7 @@
     </el-submenu>
     <el-menu-item index="/about"><span class="el-icon-phone"></span>联系客服</el-menu-item>
     <el-menu-item index="5"><span class="el-icon-document"></span>每日新闻</el-menu-item>
-    <el-submenu index="6" style="margin-left: 400px">
+    <el-submenu index="6" style="margin-left: 30%">
         <template slot="title"><span class="el-icon-user"></span>个人中心</template>
         <el-menu-item index="/login" v-show="this.$store.state.user.uid<0"><el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="30"></el-avatar>&nbsp;&nbsp;登录/注册</el-menu-item>
 
