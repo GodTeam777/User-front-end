@@ -1,7 +1,7 @@
 <template>
 
 
-   <div id="reg" style="width:100%;height: 610px;">
+   <div id="reg" style="width:100%;height: 660px;">
        <div style="z-index:0;opacity:0.9;position:absolute;background-color:white;margin-left:24%;width:750px;height: 600px;border-radius:10px;">
 
        </div>
