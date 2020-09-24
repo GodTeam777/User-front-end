@@ -1,5 +1,5 @@
 <template>
-    <div style="text-align: center;height: 120px;margin-bottom: 0px;float: left;width: 100%;background-color: #333333;font-size: 10px;line-height: 10px;color: #CCCCCC">
+    <div style="position:relative;text-align: center;height: 120px;margin-bottom: 0px;float: left;width: 100%;background-color: #333333;font-size: 10px;line-height: 10px;color: #CCCCCC">
         <br/><br/><br/>
         招联消费金融有限公司
         &nbsp;粤ICP备&nbsp;15019080号<br/><br/>

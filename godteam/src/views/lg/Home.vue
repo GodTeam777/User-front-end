@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="home" >
 
 
 
-      <div style="text-align: left;margin-left: 13%;width: 300px;height: 600px;float: left;border: 0px solid red">
+      <div style="text-align: left;margin-left: 10%;width: 300px;height: 600px;float: left;border: 0px solid red">
 
         <el-carousel height="150px">
           <el-carousel-item v-for="item in imgList" :key="item">
@@ -39,7 +39,7 @@
       <span style="color: #666666">最高可借额度(元)</span><br>
       <h1 style="color: Window">50,000.00</h1><br>
       <span style="color: #666666">日利率<span style="color: Window">0.02%</span>起&nbsp;&nbsp;最快1分钟放款</span>
-      <el-button @click="tologin" size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;margin-top: -200px;margin-left: 140px" round>立即登录</el-button>
+      <el-button @click="tologin" size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;margin-top: -10%;margin-left: 65%" round>立即登录</el-button>
       </div>
     </div>
 
@@ -72,7 +72,7 @@
           <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}万</td></tr>
           <tr><td>利率（年利化率）：<span style="color: red">{{dai.interest}}%</span></td></tr>
         </table>
-        <hr style="background-color: yellow"/>
+        <hr style="width:99%;background-color: yellow"/>
       </div>
 
 
@@ -86,12 +86,63 @@
       </div>
     </div>
 
-    <div style="text-align: left;margin-left: 15%;width: 1110px;margin-top: 10px;height: 290px;float: left;border: 1px solid blue">
-      <h1>理财产品</h1>
+    <div style="text-align: left;margin-left: 10%;width: 1190px;margin-top: 10px;height: 390px;float: left;border: 0px solid blue">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="全部产品" name="second">
+
+          <div v-for="lc in licai" style="float: left;font-size: 14px;margin-top: 18px;margin-left:2%;margin-bottom:1%;width: 46%;margin-right: 1%;border-radius:7px 7px 7px 7px; box-shadow:#F8F8FF 2px 2px 5px 5px" class="tb1">
+            <table style="width:100%;border-collapse: collapse;">
+              <tr>
+                <td>
+                  <br>
+                  <el-image style="width: 100px;height: 100px" :src="lc.url" fit="fill">
+
+                  </el-image>
+                </td>
+
+                <td colspan="4" style="width:90%;"><span style="color: red;vertical-align: middle">{{lc.lctitle}}</span><el-button type="primary" style="float: right">去看看</el-button></td>
+              </tr>
+
+              <tr>
+                <td>产品名</td>
+                <td>产品类型</td>
+                <td>收益产生周期</td>
+                <td>利率（年利化率）</td>
+
+                <td></td>
+              </tr>
+              <tr style="background-color: #FFFAFA;">
+              <td><span style="font-weight: 600">{{lc.lcname}}</span></td>
+              <td>{{lc.lctype}}</td>
+              <td>{{lc.lcperiod}}</td>
+              <td><span style="color: red">{{lc.lcrate}}%</span></td>
+              <td></td>
+            </tr>
+              <tr>
+                <td><br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+
+        </el-tab-pane>
+        <el-tab-pane label="活期产品" name="first">配置管理</el-tab-pane>
+        <el-tab-pane label="定期产品" name="third">角色管理</el-tab-pane>
+        <el-tab-pane label="更多>>" name="fourth"></el-tab-pane>
+
+      </el-tabs>
+      <br>
+      <br>
+      <hr>
     </div>
 
+
+
     <div style="position: fixed;margin-top: 18%;margin-left: 92%"><a href="#"><img src="../../assets/在线客服.png"></a></div>
-    <Bottom></Bottom>
+
   </div>
 </template>
 
@@ -104,10 +155,14 @@ export default {
   methods:{
     tologin:function () {
       this.$router.push({path: '/login', params: {}})
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
   },
   data:function() {
     return {
+      activeName: 'second',
       // 图片地址数组
       imgList: [
         {
@@ -145,6 +200,24 @@ export default {
           big_money:"200",
           url: require("../../assets/农业银行.jpg")
         }
+      ],
+      licai:[
+        {
+          lcname:"安盈成长",
+          lctype:"活期",
+          lcperiod:"每天",
+          lcrate:"5.16",
+          lctitle:"1万元起购 | 1元追加 | 9：00-15：00实时交易",
+          url: require("../../assets/中国银行.jpg")
+        },
+        {
+          lcname:"天天盈",
+          lctype:"活期",
+          lcperiod:"每天",
+          lcrate:"2.35",
+          lctitle:"高流动性，高收益率，实时申赎！",
+          url: require("../../assets/中国银行.jpg")
+        }
       ]
     }
   },
@@ -155,6 +228,10 @@ export default {
 </script>
 
 <style scoped>
+
+  .tb1{
+    border: #F5F5F5 solid 1px;
+  }
   .smallDai:link{
     text-decoration: none;
   }

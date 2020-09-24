@@ -4,6 +4,9 @@
       <NavMenu></NavMenu>
       <router-view></router-view>
     </div>
+
+    <Bottom ></Bottom>
+
   </div>
 </template>
 
@@ -14,7 +17,8 @@
 <script>
   import Home from "@/views/lg/Home";
   import NavMenu from "@/components/lg/NavMenu";
+  import Bottom from "@/components/lg/Bottom";
   export default {
-    components: {NavMenu, Home}
+    components: {NavMenu, Home,Bottom}
   }
 </script>

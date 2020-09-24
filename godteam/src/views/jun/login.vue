@@ -1,8 +1,8 @@
 <template>
-    <div id="login" class="login" style="border: red  1px;height:660px;position: fixed;width:100%;">
-        <div id="bodyBg" style="width: 100%;height:100%; ">
+    <div id="login" class="login" style="border: red  1px;height:660px;position: relative;width:100%;">
+        <div id="bodyBg" style="width: 100%;height:100%;">
 
-            <div style="position: fixed;background-color:white;height: 400px;width: 350px;margin-left: 70%;margin-top: 90px;border-radius: 6px;">
+            <div style="position: absolute;background-color:white;height: 400px;width: 350px;margin-left: 70%;margin-top: 90px;border-radius: 6px;">
                 <br>
                 <div style="margin-left: 25px">
                 <img src="../../assets/jun/5.png" alt="">
@@ -63,13 +63,14 @@
 <script>
     import verify from "@/components/jun/verify.vue";
     import login from "@/components/jun/Login.vue";
+    import Bottom from "@/components/lg/Bottom.vue";
     export default {
         data() {
             return {
                show:false
             };
         },
-        components: {login,verify},
+        components: {login,verify,Bottom},
         methods: {
             reg() {
                 this.$router.push({name: '/reg', params: {num: '1'}})

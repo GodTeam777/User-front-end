@@ -27,7 +27,7 @@
 
 <script>
     export default {
-        name: "reg1",
+        name: "reg3",
         data() {
             return {
                 ruleForm: {
@@ -39,7 +39,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$router.push({name: 'reg3',params:{}})
+                        this.$router.push({name: 'login',params:{}})
                     } else {
                         console.log('error submit!!');
                         return false;
