@@ -17,14 +17,14 @@
         <el-menu-item index="3-2">定期</el-menu-item>
     </el-submenu>
     <el-menu-item index="/about"><span class="el-icon-phone"></span>联系客服</el-menu-item>
-    <el-menu-item index="5"><span class="el-icon-document"></span>每日新闻</el-menu-item>
+    <el-menu-item index="/news"><span class="el-icon-document"></span>每日新闻</el-menu-item>
 
     <el-submenu index="6" style="margin-left: 30%">
         <template slot="title"><span class="el-icon-user"></span>个人中心</template>
 
         <el-menu-item index="/login" v-show="this.$store.state.user.uid<0"><el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="30"></el-avatar>&nbsp;&nbsp;登录/注册</el-menu-item>
 
-        <el-menu-item index="6-1" v-show="this.$store.state.user.uid>0"><el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="30"></el-avatar>&nbsp;&nbsp;用户名：{{this.$store.state.user.username}}</el-menu-item>
+        <el-menu-item index="/personal" v-show="this.$store.state.user.uid>0"><el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="30"></el-avatar>&nbsp;&nbsp;用户名：{{this.$store.state.user.username}}</el-menu-item>
         <el-menu-item index="6-2" v-show="this.$store.state.user.uid>0">
             消息
             <el-badge :value="200" :max="99" style="margin-top: -5px;margin-left:5px"></el-badge>
