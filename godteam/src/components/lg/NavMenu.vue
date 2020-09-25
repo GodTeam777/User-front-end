@@ -38,7 +38,7 @@
         <el-menu-item index="/login" v-show="this.$store.state.user.uid<0">学历信息</el-menu-item>
         <el-menu-item index="/login" v-show="this.$store.state.user.uid<0">车辆信息</el-menu-item>
         <el-menu-item index="/login" v-show="this.$store.state.user.uid<0">房屋信息</el-menu-item>
-        <el-menu-item index="6-6" v-show="this.$store.state.user.uid>0">注销</el-menu-item>
+        <el-menu-item @click="destory" index="/" v-show="this.$store.state.user.uid>0">注销</el-menu-item>
     </el-submenu>
 </el-menu>
 </template>
@@ -56,6 +56,9 @@
         },
         methods: {
             handleSelect(key, keyPath) {
+            },
+            destory(){
+                location.reload();
             }
         }
     }

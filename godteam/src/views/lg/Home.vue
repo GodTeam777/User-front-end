@@ -210,8 +210,6 @@
             </table>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="更多>>" name="fourth"></el-tab-pane>
-
       </el-tabs>
       <br>
       <br>
@@ -240,6 +238,9 @@ export default {
     },
     tosmalldai(){
       this.$router.push({path: '/smallDai', params: {}});
+    },
+    tolicai(){
+      this.$router.push({path: '/licai', params: {}});
     },
     tobigdaiinfo(){
       this.$router.push({path: '/bigDai_info', params: {}});
