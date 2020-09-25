@@ -17,6 +17,9 @@ import attestation_car from '../components/jun/attestation_car'
 import reg1 from '../components/jun/Register1'
 import reg2 from '../components/jun/Register2'
 import reg3 from '../components/jun/Register3'
+import SmallDai from "@/views/lg/SmallDai";
+import SmallDai_children from "@/views/lg/SmallDai_children";
+import SmallDai_children2 from "@/views/lg/SmallDai_children2";
 Vue.use(VueRouter)
 
 const routes = [
@@ -131,6 +134,30 @@ const routes = [
         component:reg3
       }
     ]
+  },
+  {
+    path: '/smallDai',
+    name: 'smallDai',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: SmallDai
+  },
+  {
+    path: '/smallDai_children',
+    name: 'smallDai_children',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: SmallDai_children
+  },
+  {
+    path: '/smallDai_children2',
+    name: 'smallDai_children2',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: SmallDai_children2
   }
 ]
 

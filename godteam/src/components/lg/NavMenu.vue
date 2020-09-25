@@ -8,7 +8,7 @@
     <el-menu-item index="/" class="el-icon-house">首页</el-menu-item>
     <el-submenu index="2" >
         <template slot="title"><span class="el-icon-bank-card"></span>贷款</template>
-        <el-menu-item index="2-1">小额贷款</el-menu-item>
+        <el-menu-item index="/smallDai">小额贷款</el-menu-item>
         <el-menu-item index="2-2">大额贷款</el-menu-item>
     </el-submenu>
     <el-submenu index="3">

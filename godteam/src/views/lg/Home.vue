@@ -30,7 +30,6 @@
       <el-breadcrumb-item :to="{ path: '/about' }">当前位置：首页</el-breadcrumb-item>
     </el-breadcrumb>
       <br/>
-
     </div>
 
     <div v-show="this.$store.state.user.uid<0" style="border-radius: 8px;background-color: #409EFF;text-align: left;margin-left: 5%;width: 55%;height: 200px;float: left;border: 1px  blue">
@@ -40,10 +39,11 @@
       <span style="color: #666666">最高可借额度(元)</span><br>
       <h1 style="color: Window">50,000.00</h1><br>
       <span style="color: #666666">日利率<span style="color: Window">0.02%</span>起&nbsp;&nbsp;最快1分钟放款</span>
-
-      <el-button @click="tologin" size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;margin-top: -20%;margin-left: 20%" round>立即登录</el-button>
       </div>
-    </div>
+      <div style="margin-top: -8%">
+      <el-button @click="tologin" size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;margin-top: -100%;margin-left: 55%" round>立即登录</el-button>
+      </div>
+      </div>
 
     <div v-show="this.$store.state.user.uid>0" style="border-radius: 8px;background-color: #409EFF;text-align: left;margin-left:5%;width: 55%;height: 200px;float: left;border: 1px  blue">
       <br/>
@@ -54,7 +54,7 @@
         <span style="color:#666666; font-size: 15px">总额度：<span style="color: Window">3,000.00</span></span><br/>
         <span style="color: #666666">每月15日应还：</span>
         <h3 style="color: Window">0.00</h3>
-        <div style="position: absolute;margin-left: 26%;margin-top: -9%;text-align: center">
+        <div style="margin-left: 26%;margin-top: -17%;text-align: center">
         <el-button size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;" round>立即借款</el-button><br/>
         <span style=""><a style="" href="#" class="smallDai" >提前还款</a>&nbsp;|&nbsp;<a style="font-size: 15px" href="#" class="smallDai">我要提额</a></span>
         </div>
@@ -202,7 +202,14 @@ export default {
           small_money:"50",
           big_money:"200",
           url: require("../../assets/农业银行.jpg")
-        }
+        },{
+          bdname:"中行石油贷",
+          interest:"0.03",
+          bddate:"12",
+          small_money:"10",
+          big_money:"50",
+          url: require("../../assets/中国银行.jpg")
+        },
       ],
       licai:[
         {
