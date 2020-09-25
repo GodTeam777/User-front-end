@@ -8,6 +8,15 @@ import reg3 from '../components/jun/Register3'
 import SmallDai from "@/views/lg/SmallDai";
 import SmallDai_children from "@/views/lg/SmallDai_children";
 import SmallDai_children2 from "@/views/lg/SmallDai_children2";
+import BigDai from "@/views/lg/BigDai";
+import BigDai_info from "@/views/lg/BigDai_info";
+import Big_Dai_chlden from "@/views/lg/Big_Dai_chlden";
+import Big_Dai_childen2 from "@/views/lg/Big_Dai_childen2";
+import Licai_info from "@/views/lg/Licai_info";
+import Licai from "@/views/lg/Licai";
+import Licai_childen from "@/views/lg/Licai_childen";
+import Licai_childen2 from "@/views/lg/Licai_childen2";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -80,6 +89,68 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: SmallDai_children2
+  },
+  {
+    path: '/bigDai',
+    name: 'bigDai',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: BigDai
+  },
+  {
+    path: '/bigDai_info',
+    name: 'bigDai_info',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: BigDai_info
+  },
+  {
+    path: '/big_Dai_chlden',
+    name: 'big_Dai_chlden',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Big_Dai_chlden
+  },
+  {
+    path: '/big_Dai_childen2',
+    name: 'big_Dai_childen2',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Big_Dai_childen2
+  },
+  {
+    path: '/licai_info',
+    name: 'licai_info',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Licai_info
+  },
+  {
+    path: '/licai',
+    name: 'licai',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Licai
+  },{
+    path: '/licai_childen',
+    name: 'licai_childen',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Licai_childen
+  },{
+    path: '/licai_childen2',
+    name: 'licai_childen2',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Licai_childen2
   }
 ]
 

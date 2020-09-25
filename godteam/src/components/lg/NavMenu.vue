@@ -9,12 +9,12 @@
     <el-submenu index="2" >
         <template slot="title"><span class="el-icon-bank-card"></span>贷款</template>
         <el-menu-item index="/smallDai">小额贷款</el-menu-item>
-        <el-menu-item index="2-2">大额贷款</el-menu-item>
+        <el-menu-item index="/bigDai">大额贷款</el-menu-item>
     </el-submenu>
     <el-submenu index="3">
         <template slot="title"><span class="el-icon-s-data"></span>理财</template>
-        <el-menu-item index="3-1">活期</el-menu-item>
-        <el-menu-item index="3-2">定期</el-menu-item>
+        <el-menu-item index="/licai">活期</el-menu-item>
+        <el-menu-item index="/licai">定期</el-menu-item>
     </el-submenu>
     <el-menu-item index="/about"><span class="el-icon-phone"></span>联系客服</el-menu-item>
     <el-menu-item index="5"><span class="el-icon-document"></span>每日新闻</el-menu-item>
