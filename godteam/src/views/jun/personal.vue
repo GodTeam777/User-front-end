@@ -16,9 +16,9 @@
                 </tr>
             </table>
         </div>
-            <div style="margin-left:12%;width: 85%;;margin-top:2%;">
+            <div style="margin-left:12%;width: 85%;;margin-top:2%;border: red solid 0px">
                 <el-row class="tac">
-                    <el-col :span="12" style="width: 78%">
+                    <el-col :span="12" style="width: 90%">
                         <el-menu
                                 :default-active="$route.path"
                                 class="el-menu-vertical-demo"
