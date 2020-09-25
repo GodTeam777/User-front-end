@@ -55,8 +55,10 @@
     export default {
         data() {
             var checkCard = (rule, value, callback) => {
+
+
                if(value.toString().length!=16){
-                   callback(new Error('请输入正确的身份证号码'))
+                   this.numberValidateForm.showif=false;
                }else{
                    this.numberValidateForm.showif=true;
                }
@@ -67,7 +69,11 @@
                 imageUrl1: '',
                 imageUrl2: '',
                 numberValidateForm: {
+                    islength:false,
+                    cardnum1:0,
+                    cardnum2:16,
                     card: '',
+                    cardinfo: '',
                     showif:false
                 },
                 rules: {
@@ -78,24 +84,21 @@
             }
         },
         methods: {
-            thisclose(numm){
-               if(numm==1){
-                   this.loading1=false;
-               }else{
-                   this.loading2=false;
-               }
-            },
-            handleAvatarSuccess1(res, file) {
 
-                this.loading1=true;
-                this.imageUrl1 = URL.createObjectURL(file.raw);
-                setTimeout(this.thisclose(1), 2000);
-
-            },handleAvatarSuccess2(res, file) {
+            handleAvatarSuccess2(res, file) {
                 this.loading2=true;
+                setTimeout(() => {
+                    this.loading2 = false;
+                }, 1000);
                 this.imageUrl2 = URL.createObjectURL(file.raw);
-                setTimeout(this.thisclose(2), 2000);
 
+
+            },handleAvatarSuccess1(res, file) {
+                this.loading1=true;
+                setTimeout(() => {
+                    this.loading1 = false;
+                }, 1000);
+                this.imageUrl1 = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -113,10 +116,17 @@
                 this.$refs[numberValidateForm].resetFields();
             },
             submitForm(numberValidateForm) {
-
+               this.numberValidateForm.cardnum1=this.numberValidateForm.card.toString().length;
+                this.numberValidateForm.islength=this.numberValidateForm.cardnum1==this.numberValidateForm.cardnum2;
+                if(! this.numberValidateForm.islength){
+                    this.$message({
+                        type:'info',
+                        message: '请输入正确的身份证号码'
+                    });
+                }
                if(this.numberValidateForm.showif){
-                   if(this.imageUrl1==""||this.imageUrl2==""){
 
+                   if(this.imageUrl1==""||this.imageUrl2==""){
                        this.$message({
                            type:'info',
                            message: '请点击上传身份证照'
