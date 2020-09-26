@@ -1,9 +1,6 @@
 <template>
   <div class="home" >
 
-
-
-
       <div style="text-align: left;margin-left: 10%;width: 20%;height: 600px;float: left;border: 0px solid red">
 
         <el-carousel height="150px">
