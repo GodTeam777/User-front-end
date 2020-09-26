@@ -16,7 +16,7 @@
         <el-menu-item index="3-1">活期</el-menu-item>
         <el-menu-item index="3-2">定期</el-menu-item>
     </el-submenu>
-    <el-menu-item index="/about"><span class="el-icon-phone"></span>联系客服</el-menu-item>
+    <el-menu-item index="/About"><span class="el-icon-phone"></span>联系客服</el-menu-item>
     <el-menu-item index="5"><span class="el-icon-document"></span>每日新闻</el-menu-item>
 
     <el-submenu index="6" style="margin-left: 30%">
