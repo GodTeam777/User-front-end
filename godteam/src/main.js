@@ -6,7 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
+import echarts from 'echarts'
 import SlideVerify from 'vue-monoplasty-slide-verify'
 
 Vue.use(SlideVerify)
@@ -14,6 +14,7 @@ Vue.use(SlideVerify)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueAxios,axios)
+Vue.prototype.$echarts = echarts
 new Vue({
   router,
   store,
