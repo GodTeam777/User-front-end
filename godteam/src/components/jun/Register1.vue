@@ -43,19 +43,11 @@
                 >
                     <el-input type="age" v-model.number="ruleForm.Phone" autocomplete="off"></el-input>
                 </el-form-item>
-
-                <el-form-item label="活动性质">
-                    <el-checkbox-group v-model="ruleForm.type">
-                        <el-checkbox-button label="美食/餐厅线上活动" name="type"></el-checkbox-button>
-                        <el-checkbox-button label="地推活动" name="type"></el-checkbox-button>
-                        <el-checkbox-button label="线下主题活动" name="type"></el-checkbox-button>
-                    </el-checkbox-group>
-                </el-form-item>
                 <el-form-item style="margin-left: 65%;">
                 </el-form-item>
             </el-form>
-            <div style="margin-left: 74%;width:165px;">
-                <el-button type="primary" @click="submitForm('ruleForm')">下一步</el-button>
+            <div style="margin-left: 64%;width:265px;">
+                <el-button type="primary" @click="submitForm('ruleForm')" plain>下一步</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </div>
         </div>

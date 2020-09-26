@@ -23,9 +23,11 @@
                     </el-upload>
                 </el-form-item>
             </el-form>
-            <div style="margin-left: 74%;width:165px;">
+                <div style="margin-left: 64%;width:265px;">
+                    <el-button type="primary" @click="goback" plain>上一步</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')" plain style="height: 40px">下一步</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
-                <el-button type="primary" @click="submitForm('ruleForm')" plain style="height: 40px">下一步</el-button>
+
             </div>
         </div>
     </div>
@@ -46,6 +48,9 @@
         },
         methods:
         {
+            goback() {
+                this.$router.go(-1)
+            },
             handleAvatarSuccess(res, file) {
                 this.loading=true;
                 setTimeout(() => {

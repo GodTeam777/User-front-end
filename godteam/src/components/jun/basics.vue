@@ -115,11 +115,11 @@
                    }else{
                     this.form1.radio="2"
                       }
-                    this.isShow=true
+                    this.isShow=!   this.isShow
 
             },
             OnSubmit(){
-
+                this.isShow=!this.isShow
             }
         }
     }

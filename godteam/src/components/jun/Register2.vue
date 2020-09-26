@@ -43,10 +43,11 @@
            </el-form>
 
        </div>
-        <div style="margin-left: 74%;width:165px;">
-
-            <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+            <div style="margin-left: 64%;width:265px;">
+                <el-button type="primary" @click="goback" plain>上一步</el-button>
                 <el-button type="primary" @click="submitForm('numberValidateForm')" plain style="height: 40px">下一步</el-button>
+
+                <el-button @click="resetForm('numberValidateForm')">重置</el-button>
         </div>
     </div>
 </template>
@@ -84,7 +85,9 @@
             }
         },
         methods: {
-
+            goback() {
+                this.$router.go(-1)
+            },
             handleAvatarSuccess2(res, file) {
                 this.loading2=true;
                 setTimeout(() => {
