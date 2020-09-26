@@ -16,8 +16,10 @@
         <el-menu-item index="/licai">活期</el-menu-item>
         <el-menu-item index="/licai">定期</el-menu-item>
     </el-submenu>
+
     <el-menu-item index="/about"><span class="el-icon-phone"></span>联系客服</el-menu-item>
     <el-menu-item index="/news"><span class="el-icon-document"></span>每日新闻</el-menu-item>
+
 
     <el-submenu index="6" style="margin-left: 30%">
         <template slot="title"><span class="el-icon-user"></span>个人中心</template>
