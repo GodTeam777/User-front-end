@@ -6,10 +6,10 @@
                <img src="../assets/kefu/index.png" class="img1">
            </div>
 
-<div><textarea style="position:absolute;;margin-top:37.2%;height:20%; width :28.6%; border:0.5px solid #bbbbbb;" class="submit-msg" placeholder="请简要描述您要咨询的问题"></textarea>
+<div><textarea style="position:absolute;;margin-top:42%;height:20%; width :28.6%; border:0.5px solid #bbbbbb;" class="submit-msg" placeholder="请简要描述您要咨询的问题"></textarea>
  </div>
 
-            <div style="height:90%; width:40%;margin-left:60% ;border:1px solid #bbbbbb;float:right;" >
+            <div style="height:87.3%; width:40%;margin-left:60% ;border-left:1px solid #bbbbbb;float:right;" >
                 <p style="font-size: 18px;text-align:center">常见问题</p>
                 <el-tabs v-model="activeName" @tab-click="handleClick" ><el-collapse accordion >
                 <el-collapse-item >
@@ -54,8 +54,9 @@
                     <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                     <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
                 </el-collapse-item>
-            </el-collapse> </el-tabs></div>
-            <div style="position:absolute;margin-left: 22%;margin-top: 44%;"> <el-button type="primary" style="width:100px">发送</el-button></div>
+            </el-collapse> </el-tabs>
+            </div>
+            <div style="position:absolute;margin-left: 21%;margin-top: 47%;"> <el-button type="primary" style="width:100px">发送</el-button></div>
             </div>
 
 </template>
@@ -80,7 +81,7 @@
     /*}*/
     .img1{
         position:absolute; top:110px;
-        position:absolute; right:500px;
+        position:absolute; right:350px;
         width: 23px;
     }
     .title1{
