@@ -22,7 +22,7 @@
             <div style="cursor: pointer;position:relative;margin-left:2%;margin-top:55%;border: #CCCCCC solid 1px;width: 56%;height: 18%;border-radius:13px 13px 13px 13px;">
                 <table border="0" style="margin: 0 auto">
                     <tr>
-                        <td><br><br><span style="color: #CCCCCC;">添加银行卡+</span></td>
+                        <td><br><el-button style="margin-top: 10%"  plain><span style="color: #CCCCCC;">添加银行卡+</span></el-button></td>
                     </tr>
                 </table>
             </div>
@@ -51,6 +51,25 @@
                     backgrund:{background:'Maroon',width:'100%',borderRadius:'13px 13px 13px 13px'}
                     }
                 ]
+            }
+        },
+        methods:{
+            open() {
+                this.$prompt('请录入银行卡信息', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputErrorMessage: '邮箱格式不正确'
+                }).then(({ value }) => {
+                    this.$message({
+                        type: 'success',
+                        message: '你的邮箱是: ' + value
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
             }
         }
     }
