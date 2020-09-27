@@ -31,7 +31,7 @@
                 <tr>
                     <td style="text-align: right">毕业证：</td>
                     <td>
-                        <el-upload :disabled="isDiabl" style="width: 49%"
+                        <el-upload :disabled="isDiabl" style="width: 53%"
                                 class="avatar-uploader"
                                 action="https://jsonplaceholder.typicode.com/posts/"
                                 :show-file-list="false"

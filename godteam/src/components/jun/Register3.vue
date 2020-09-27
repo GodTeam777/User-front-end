@@ -12,12 +12,12 @@
                     <el-input v-model="ruleForm.bank" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="银行卡照">
-                    <el-upload
+                    <el-upload style="width: 28.5%;height:180px;"
                             class="avatar-uploader"
                             action="https://jsonplaceholder.typicode.com/posts/"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"  v-loading="loading" style="width: 29%;">
+                            :before-upload="beforeAvatarUpload"  v-loading="loading">
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
@@ -94,6 +94,7 @@
                 }
             },
             resetForm(formName) {
+                this.imageUrl="";
                 this.$refs[formName].resetFields();
             }
         }
