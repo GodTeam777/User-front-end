@@ -75,7 +75,7 @@
                 let myChart = this.$echarts.init(document.getElementById('myChart'))
                 // 绘制图表
                 myChart.setOption({
-                    title: {text: '本周购买量'},
+                    title: {text: '近七天购买量'},
                     xAxis: {
                         type: 'category',
                         data: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']

@@ -47,10 +47,10 @@
       <div style="margin-left: 5%">
         <span style="font-size: 25px;font-weight: 600;color: Window">小额随心贷</span><br/>
         <span style="color: #666666">当前可借额度：</span><br>
-        <h1 style="color: Window">3,000.00</h1>
-        <span style="color:#666666; font-size: 15px">总额度：<span style="color: Window">3,000.00</span></span><br/>
+        <h1 style="color: Window">{{smadaimsg.kejie}}</h1>
+        <span style="color:#666666; font-size: 15px">总额度：<span style="color: Window">{{smadaimsg.zonged}}</span></span><br/>
         <span style="color: #666666">每月15日应还：</span>
-        <h3 style="color: Window">0.00</h3>
+        <h3 style="color: Window">{{smadaimsg.yinhuan}}</h3>
         <div style="margin-left: 26%;margin-top: -17%;text-align: center">
         <el-button size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;" @click="tosmalldai" round>立即借款</el-button><br/>
         <span style=""><a style="" href="#" class="smallDai" >提前还款</a>&nbsp;|&nbsp;<a style="font-size: 15px" href="#" class="smallDai">我要提额</a></span>
@@ -244,10 +244,36 @@ export default {
     },
     tolicaiinfo(){
       this.$router.push({path: '/licai_info', params: {}});
+    },
+    toMoney(num){
+    num = num.toLocaleString();
+    if(num.toString().indexOf('.')==-1){
+      num=num+".00";
     }
+    if(num.toString().split('.')[1].length==1){
+      num=num+"0";
+    }
+    return num;//返回的是字符串23,245.12保留2位小数
+    },
+    smadaiinfo(){
+      console.log("发起请求获得小额贷款信息：")
+      this.axios({url:'http://localhost:10086/smalldai_home',method:"post",withCredentials:true}).then(res=>{
+        console.log("返回数据："+res.data)
+        this.smadaimsg.kejie = this.toMoney(res.data.newedu);
+        this.smadaimsg.zonged =this.toMoney(res.data.user.smalldai);
+        this.smadaimsg.yinhuan=this.toMoney(res.data.onehuan);
+      });
+    }
+
   },
+
   data:function() {
     return {
+      smadaimsg:{
+        zonged:'',
+        kejie:'',
+        yinhuan:''
+      },
       activeName: 'second',
       // 图片地址数组
       imgList: [
@@ -331,6 +357,10 @@ export default {
         }
       ]
     }
+  },
+
+  created(){
+    this.smadaiinfo();
   },
   components: {
     Bottom
