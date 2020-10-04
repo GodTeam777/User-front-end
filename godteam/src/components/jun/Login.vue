@@ -2,11 +2,11 @@
     <el-form ref="form" :model="user" label-width="80px" size="mini">
         <br>
         <el-form-item label="用户名:" style="width:320px">
-           <el-input v-model="user.username"></el-input>
+           <el-input v-model="user.petname"></el-input>
         </el-form-item>
 
         <el-form-item label="密码:" style="width:320px">
-            <el-input v-model="user.userpsw"></el-input>
+            <el-input v-model="user.uspws"></el-input>
         </el-form-item>
         <verify style="width: 320px;margin-left:15px;" v-on:childByValue="childByValue"></verify>
         <br>
@@ -24,8 +24,8 @@
             return {
                 user: {
                     uid:1,
-                    username: '',
-                    userpsw: '',
+                    petname: '',
+                    uspws:'',
                     huakaui:false
                 }
             };
@@ -58,12 +58,28 @@
                     });
                 }
                 else {
-                    this.$store.commit('updateUser',this.user);
-                    this.$router.push({path: '/', params: {}});
+                    this.axios({
+                        url:"http://localhost:10086/Login",
+                        method:"POST",
+                        withCredentials: true,
+                        data:{
+                            petname:this.user.petname,
+                            uspws:this.user.uspws
+                        }
+                    }).then(res=>{
+
+                        this.$store.commit('updateisLogin',1);
+                            this.$store.commit('updateUserName',res.data.uname);
+                        this.$store.commit('updateUserUid',res.data.usersid);
+                        alert(this.$store.state.user.uid+":"+this.$store.state.user.username)
+                        this.$router.push({path: '/', params: {}});
+                    }).catch()
+
+
 
                 }
 
-                console.log('submit!');
+
             }
         },components:{
             verify

@@ -11,6 +11,9 @@
                 <el-form-item label="银行卡号码"  prop="bank">
                     <el-input v-model="ruleForm.bank" autocomplete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="支付密码"  prop="bank">
+                    <el-input v-model="ruleForm.zfpws" autocomplete="off" maxlength="6"></el-input>
+                </el-form-item>
                 <el-form-item label="银行卡照">
                     <el-upload style="width: 28.5%;height:180px;"
                             class="avatar-uploader"
@@ -42,6 +45,7 @@
                 loading:false,
                 imageUrl: '',
                 ruleForm: {
+                    zfpws:"",
                     bank: ''
                 },
             };
@@ -72,14 +76,18 @@
                 return isJPG && isLt2M;
             },
             submitForm(formName) {
+                this.isn=this.ruleForm.bank==""
                 if(this.ruleForm.bank==""){
                     this.$message({
                         type:'info',
                         message: '请输入银行卡号'
                     });
-                }
-                this.isn=this.ruleForm.bank==""
-                if(!this.isn){
+                }else if(this.ruleForm.zfpws.length!=6){
+                    this.$message({
+                        type:'info',
+                        message: '请设置6位支付密码'
+                    });
+                }else if(!this.isn){
 
                     if(this.imageUrl==""||this.imageUrl==""){
 
