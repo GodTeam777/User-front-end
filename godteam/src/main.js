@@ -17,6 +17,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueAxios,axios)
 Vue.prototype.$echarts = echarts
+axios.defaults.withCredentials=true;
 new Vue({
   router,
   store,

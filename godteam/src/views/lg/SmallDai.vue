@@ -7,8 +7,8 @@
         </el-steps>
         <div style="margin-top: 30px;text-align: center">
             <p style="color: rgba(180,173,163,0.85)">可借</p>
-            <p style="font-size: 70px">￥3,000</p>
-            <p style="color: rgba(180,173,163,0.85)">当前额度：￥3,000<span style="margin-left: 10px">日利率：0.097%</span></p>
+            <p style="font-size: 70px">￥{{smadaimsg.kejie}}</p>
+            <p style="color: rgba(180,173,163,0.85)">当前额度：￥{{smadaimsg.zonged}}<span style="margin-left: 10px">日利率：{{smadaimsg.lilv}}%</span></p>
         </div>
         <div style="margin-top: 20px;text-align: center">
             <p><el-checkbox v-model="checked"></el-checkbox>&nbsp;
@@ -209,14 +209,44 @@
         data() {
             return {
                 checked: false,
-                centerDialogVisible:false
+                centerDialogVisible:false,
+                smadaimsg:{
+                    zonged:'',
+                    kejie:'',
+                    yinhuan:'',
+                    lilv:''
+                },
             };
         },
+
         methods:{
             tosmallDai_children(){
-                this.$router.push({path: '/smallDai_children', params: {}});
+                this.$router.push({path: '/smallDai_children', query: {'lilv':this.smadaimsg.lilv}});
+            },
+            toMoney(num){
+                num = num.toLocaleString();
+                if(num.toString().indexOf('.')==-1){
+                    num=num+".00";
+                }
+                if(num.toString().split('.')[1].length==1){
+                    num=num+"0";
+                }
+                return num;//返回的是字符串23,245.12保留2位小数
+            },
+            smadaiinfo(){
+                console.log("发起请求获得小额贷款信息：")
+                this.axios({url:'http://localhost:10086/smalldai_home',method:"post",withCredentials:true}).then(res=>{
+                    console.log("返回数据："+res.data)
+                    this.smadaimsg.kejie = this.toMoney(res.data.newedu);
+                    this.smadaimsg.zonged =this.toMoney(res.data.user.smalldai);
+                    this.smadaimsg.yinhuan=this.toMoney(res.data.onehuan);
+                    this.smadaimsg.lilv=this.toMoney(res.data.lilv.lilv)
+                });
             }
-        }
+        },
+        created(){
+            this.smadaiinfo();
+        },
     }
 </script>
 

@@ -24,11 +24,11 @@
                             <el-option
                                     v-for="item in cities"
                                     :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
+                                    :label="item[1]"
+                                    :value="item[1]"
                                     >
-                                <span style="float: left">{{ item.label }}</span>
-                                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                                <span style="float: left">{{ item[1] }}</span>
+                                <span style="float: right; color: #8492a6; font-size: 13px">{{ item[0] }}</span>
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -37,11 +37,11 @@
                             <el-option
                                     v-for="item in cities"
                                     :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
+                                    :label="item[1]"
+                                    :value="item[1]"
                                     >
-                                <span style="float: left">{{ item.label }}</span>
-                                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                                <span style="float: left">{{ item[1] }}</span>
+                                <span style="float: right; color: #8492a6; font-size: 13px">{{ item[0] }}</span>
                             </el-option>
                         </el-select>
 
@@ -101,14 +101,34 @@
 </template>
 
 <script>
+
     export default {
         name: "SmallDai_children",
         methods:{
             tobefore(){
-                if (this.password.length===6){
+
+                if (this.password.length==6){
+                    //console.log("支付密码"+this.password)
                     this.pvidate='';
                     this.centerDialogVisible=false;
-                    this.$router.push({path: '/SmallDai_children2', params: {}});
+                    console.log("支付密码"+this.password)
+                    this.axios({url:'http://localhost:10086/zhifupswp',method:"post",withCredentials:true,data:{zhifupws:this.password}}).then(res=>{
+                        console.log("返回支付密码数据"+res.data)
+                        if(res.data==1){
+                            this.axios({url:'http://localhost:10086/smalldaio',method:"post",withCredentials:true,data:{form:this.form}}).then(res=> {
+                                if (res.data) {
+                                    this.$router.push({path: '/SmallDai_children2', params: {}});
+                                }else{
+                                    alert("贷款失败，请联系客服")
+                                }
+                            })
+                        }else{
+                            this.pvidate="支付密码错误！";
+                            this.password='';
+                            this.judgePassword();
+                            this.centerDialogVisible=true;
+                        }
+                    })
                 }else{
                     this.pvidate="请输入正确支付密码！";
                 }
@@ -124,7 +144,7 @@
             },
             submitForm(formName) {
                 this.form.isnu=this.form.brank1!=""&&this.form.brank2!="";
-                if (this.form.isnu&&this.form.smalldai!="") {
+                if (this.form.isnu&&this.form.smalldai!=""&&this.form.smalldai<=this.kejie&&this.form.smalldai>0) {
                     this.centerDialogVisible=true;
                 }
                 this.$refs[formName].validate((valid) => {
@@ -137,7 +157,6 @@
             },
             //校验密码
             surePassword: function() {
-                // 调用密码校验接口
 
             },
             // 密码输入样式
@@ -163,11 +182,36 @@
                 if(this.password.length == 6) {
                     this.show1 = true;this.show2 = true;this.show3 = true;this.show4 = true;this.show5 = true;this.show6 = true;
                     // 接口校验密码
-                    this.surePassword();
                 }
             },
+            getkejie(){
+                this.axios({url:'http://localhost:10086/smalldai_home',method:"post",withCredentials:true}).then(res=>{
+                    this.kejie=res.data.newedu;
+                })
+            },
+            getbank(){
+                this.axios({url:'http://localhost:10086/mybankcard',method:"post",withCredentials:true}).then(res=>{
+                    var opda=new Array();
+                    for (var i=0;i<res.data.length;i++){
+                        var item=new Array();
+                        item[0]=res.data[i][0].bname;
+                        item[1]=res.data[i][1].bankcard;
+                        opda[i]= item;
+                    }
+                    this.cities=opda;
+                    console.log("数据"+opda);
+                })
+            }
+
         },
         data() {
+            var validatesmadai = (rule, value, callback) => {
+                if (value > this.kejie) {
+                    callback(new Error('额度不足，可借额度为'+this.kejie));
+                } else {
+                    callback();
+                }
+            };
             var checkbrank1 = (rule, value, callback) => {
 
                 if (this.form.brank1=="") {
@@ -181,6 +225,7 @@
                 }
             };
             return {
+                kejie:'',
                 centerDialogVisible: false,
                 password: '',
                 pvidate:'',
@@ -193,7 +238,7 @@
                 show6: false,
                 form: {
                     isnu:false,
-                    smalldai: 3000,
+                    smalldai: '',
                     dai_date:'3',
                     meiri:'0',
                     brank1: '',
@@ -202,7 +247,8 @@
                 rules: {
                     smalldai: [
                         { required: true, message: '金额不能为空'},
-                        { type: 'number', message: '年龄必须为数字值'}
+                        { type: 'number', message: '金额必须为数字值'},
+                        { validator: validatesmadai, trigger: 'blur' }
                     ],
                     value1: [
                         { validator: checkbrank1, trigger: 'change' }
@@ -211,22 +257,26 @@
                         { validator: checkbrank2, trigger: 'change' }
                     ]
                 },
-                cities: [{
-                    value: '邮政',
-                    label: '6222******3901'
-                },{
-                    value: '建设',
-                    label: '6221******0012'
-                }]
+                cities: [],
+                banks:{
+                    value:'',
+                    lable:''
+                }
             }
         },
         computed:{
             meiri:function () {
-               var num= (this.form.smalldai*0.00097*30)+(this.form.smalldai/this.form.dai_date);
+                console.log("lilv"+this.$route.query.lilv);
+               var num= (this.form.smalldai*this.$route.query.lilv*30/100)+(this.form.smalldai/this.form.dai_date);
                num=num.toFixed(2);
+               this.form.meiri=num;
                 return num;
             }
-        }
+        },
+        created(){
+            this.getkejie();
+            this.getbank();
+        },
     }
 </script>
 
