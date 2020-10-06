@@ -11,13 +11,16 @@
                 <el-form-item label="银行卡号码"  prop="bank">
                     <el-input v-model="ruleForm.bank" autocomplete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="支付密码"  prop="bank">
+                    <el-input v-model="ruleForm.zfpws" autocomplete="off" maxlength="6"></el-input>
+                </el-form-item>
                 <el-form-item label="银行卡照">
-                    <el-upload
+                    <el-upload style="width: 28.5%;height:180px;"
                             class="avatar-uploader"
                             action="https://jsonplaceholder.typicode.com/posts/"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"  v-loading="loading" style="width: 29%;">
+                            :before-upload="beforeAvatarUpload"  v-loading="loading">
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
@@ -42,6 +45,7 @@
                 loading:false,
                 imageUrl: '',
                 ruleForm: {
+                    zfpws:"",
                     bank: ''
                 },
             };
@@ -72,14 +76,18 @@
                 return isJPG && isLt2M;
             },
             submitForm(formName) {
+                this.isn=this.ruleForm.bank==""
                 if(this.ruleForm.bank==""){
                     this.$message({
                         type:'info',
                         message: '请输入银行卡号'
                     });
-                }
-                this.isn=this.ruleForm.bank==""
-                if(!this.isn){
+                }else if(this.ruleForm.zfpws.length!=6){
+                    this.$message({
+                        type:'info',
+                        message: '请设置6位支付密码'
+                    });
+                }else if(!this.isn){
 
                     if(this.imageUrl==""||this.imageUrl==""){
 
@@ -94,6 +102,7 @@
                 }
             },
             resetForm(formName) {
+                this.imageUrl="";
                 this.$refs[formName].resetFields();
             }
         }

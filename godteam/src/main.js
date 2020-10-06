@@ -4,11 +4,13 @@ import router from './router'
 import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
-import axios from 'axios'
+
 import VueAxios from 'vue-axios'
 import echarts from 'echarts'
 import SlideVerify from 'vue-monoplasty-slide-verify'
 
+import axios from 'axios'
+axios.defaults.withCredentials=true;
 Vue.use(SlideVerify)
 
 Vue.config.productionTip = false

@@ -16,7 +16,7 @@
                <el-form-item label="身份证照片" prop="card">
                    <div style="width: 100%;">
                        <div style="width:30%;float: right">
-                   <el-upload
+                   <el-upload style="width: 95.8%;height:180px;"
                            class="avatar-uploader"
                            action="https://jsonplaceholder.typicode.com/posts/"
                            :show-file-list="false"
@@ -28,7 +28,7 @@
                        </div>
                        <div style="float: right;margin-right: 13%">（正反各一张）</div>
                        <div style="width:30%">
-                   <el-upload
+                   <el-upload style="width: 95.2%;height:180px;"
                            class="avatar-uploader"
                            action="https://jsonplaceholder.typicode.com/posts/"
                            :show-file-list="false"
@@ -117,6 +117,8 @@
             },
             resetForm(numberValidateForm) {
                 this.$refs[numberValidateForm].resetFields();
+                this.imageUrl1="";
+                this.imageUrl2="";
             },
             submitForm(numberValidateForm) {
                this.numberValidateForm.cardnum1=this.numberValidateForm.card.toString().length;
@@ -145,9 +147,6 @@
 </script>
 
 <style>
-    body {
-        margin: 0;
-    }
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;

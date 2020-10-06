@@ -226,7 +226,28 @@ import Bottom from "@/components/lg/Bottom";
 
 export default {
   name: 'Home',
+  created:function(){
+    if(this.$store.state.user.isLogin!=0){
+      this.PageRefresh();
+    }
+  }
+,
   methods:{
+    PageRefresh(){
+      this.axios({
+        url:"http://localhost:10086/refresh",
+        method:"POST",
+        withCredentials:true,
+
+      }).then(res=>{
+        alert("返回的数据："+res.data)
+        this.$store.commit('updateUserName',res.data.uname);
+        this.$store.commit('updateUserUid',res.data.usersid);
+        alert(this.$store.state.user.uid+":"+this.$store.state.user.username)
+        this.$router.push({path: '/', params: {}});
+      }).catch()
+    }
+    ,
     tologin:function () {
       this.$router.push({path: '/login', params: {}})
     },
