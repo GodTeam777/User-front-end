@@ -69,7 +69,7 @@
             <td rowspan="4"><el-button type="primary" @click="tobigdaiinfo">查看详情</el-button></td>
           </tr>
           <tr><td>放款周期：{{dai.bddate}}个月</td></tr>
-          <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}万</td></tr>
+          <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}</td></tr>
           <tr><td>利率（年利化率）：<span style="color: red">{{dai.interest}}%</span></td></tr>
         </table>
         <hr style="width:99%;background-color: yellow"/>
@@ -80,9 +80,10 @@
         <el-pagination
               small
               layout="prev, pager, next"
-              page-size="4"
-              :total="20">
-      </el-pagination><div style="margin-top: -25px;margin-left: -250px"><a href="#" style="color: #409EFF" CLASS="smallDai">查看更多</a></div>
+              @current-change="selectbypage"
+              :page-size="4"
+              :total="bigdaipage.total">
+      </el-pagination><div style="margin-top: -25px;margin-left: -250px"><a href="#" style="color: #409EFF" CLASS="smallDai" @click="tobigdai">查看更多</a></div>
       </div>
     </div>
 
@@ -228,6 +229,25 @@ export default {
   name: 'Home'
   ,
   methods:{
+    selectbypage(val){
+      console.log("发起请求获得大额贷款信息：")
+      this.axios({url:'http://localhost:10086/bigdaiall_home',method:"post",withCredentials:true,data:{pageNo:val,pageSize:4}}).then(res=>{
+        var result=new Array();
+        for (var i = 0; i <res.data.data.length ; i++) {
+          var chil={
+            bdname:res.data.data[i].big.bdname,
+            interest:res.data.data[i].big.interest,
+            bddate:res.data.data[i].big.bddate,
+            small_money:res.data.data[i].big.smallMoney,
+            big_money:res.data.data[i].big.bigMoney,
+            url: "http://localhost:10086/img/"+res.data.data[i].big.bdpath
+          }
+          result.push(chil)
+        }
+        this.bigdaipage.total=res.data.totalRecords;
+        this.bigdai=result;
+      });
+    },
     PageRefresh(){
       this.axios({
         url:"http://localhost:10086/refresh",
@@ -271,6 +291,9 @@ export default {
     tolicaiinfo(){
       this.$router.push({path: '/licai_info', params: {}});
     },
+    tobigdai(){
+      this.$router.push({path: '/bigDai', params: {}});
+    },
     toMoney(num){
     num = num.toLocaleString();
     if(num.toString().indexOf('.')==-1){
@@ -282,7 +305,7 @@ export default {
     return num;//返回的是字符串23,245.12保留2位小数
     },
     smadaiinfo(){
-      console.log("发起请求获得小额贷款信息：")
+      console.log("发起请求获得小额贷款：")
       this.axios({url:'http://localhost:10086/smalldai_home',method:"post",withCredentials:true}).then(res=>{
         console.log("返回数据："+res.data)
         this.smadaimsg.kejie = this.toMoney(res.data.newedu);
@@ -290,7 +313,6 @@ export default {
         this.smadaimsg.yinhuan=this.toMoney(res.data.onehuan);
       });
     }
-
   },
 
   data:function() {
@@ -299,6 +321,9 @@ export default {
         zonged:'',
         kejie:'',
         yinhuan:''
+      },
+      bigdaipage:{
+        total:'',
       },
       activeName: 'second',
       // 图片地址数组
@@ -314,37 +339,6 @@ export default {
         }
       ],
       bigdai:[
-        {
-          bdname:"中行信用贷",
-          interest:"0.03",
-          bddate:"12",
-          small_money:"10",
-          big_money:"50",
-          url: require("../../assets/yinhang/中国银行.jpg")
-        },
-        {
-          bdname:"农行信用贷",
-          interest:"0.05",
-          bddate:"12",
-          small_money:"20",
-          big_money:"100",
-          url: require("../../assets/yinhang/农业银行.jpg")
-        },
-        {
-          bdname:"农行优惠贷",
-          interest:"0.06",
-          bddate:"24",
-          small_money:"50",
-          big_money:"200",
-          url: require("../../assets/yinhang/农业银行.jpg")
-        },{
-          bdname:"中行石油贷",
-          interest:"0.03",
-          bddate:"12",
-          small_money:"10",
-          big_money:"50",
-          url: require("../../assets/yinhang/中国银行.jpg")
-        },
       ],
       licai:[
         {
@@ -387,6 +381,7 @@ export default {
 
   created(){
     this.smadaiinfo();
+    this.selectbypage(1);
     this.PageRefresh();
   },
   components: {

@@ -5,41 +5,40 @@
             <div style="width: 100%;height: 304px;border-top: 3px solid rgba(22,98,188,0.7);border-left: 1px solid rgba(22,98,188,0.7);border-right: 1px solid rgba(22,98,188,0.7);">
                 <p style="line-height: 60px;border-bottom: 1px solid rgba(203,157,34,0.76);">
                     <span style="margin-left: 20px">产品类型：</span>
-                    <el-radio style="margin-left: 7%" v-model="type" label="0" border size="small">全部</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="type" label="信用贷" border size="small">信用贷</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="type" label="抵押贷" border size="small">抵押贷</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="type" label="质押贷" border size="small">质押贷</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="type" label="担保贷" border size="small">担保贷</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="type" label="票据贴现" border size="small">票据贴现</el-radio>
-                    {{this.type}}
+                    <el-radio style="margin-left: 7%" v-model="type" label="" border size="small" @change="selectbypage(1)">全部</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="type" label="信用贷" border size="small" @change="selectbypage(1)">信用贷</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="type" label="抵押贷" border size="small" @change="selectbypage(1)">抵押贷</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="type" label="质押贷" border size="small" @change="selectbypage(1)">质押贷</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="type" label="担保贷" border size="small" @change="selectbypage(1)">担保贷</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="type" label="票据贴现" border size="small" @change="selectbypage(1)">票据贴现</el-radio>
                 </p>
                 <p style="line-height: 60px;border-bottom: 1px solid rgba(203,157,34,0.76);">
                     <span style="margin-left: 20px">贷款周期：</span>
-                    <el-radio style="margin-left: 7%" v-model="big_Date" label="0" border size="small">全部</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="big_Date" label="1" border size="small">1个月</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_Date" label="3" border size="small">3个月</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="big_Date" label="6" border size="small">6个月</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_Date" label="12" border size="small">12个月</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_Date" label="24" border size="small">24个月</el-radio>
+                    <el-radio style="margin-left: 7%" v-model="big_Date" label="" border size="small" @change="selectbypage(1)">全部</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="big_Date" label="1" border size="small" @change="selectbypage(1)">1个月</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_Date" label="3" border size="small" @change="selectbypage(1)">3个月</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="big_Date" label="6" border size="small" @change="selectbypage(1)">6个月</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_Date" label="12" border size="small" @change="selectbypage(1)">12个月</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_Date" label="24" border size="small" @change="selectbypage(1)">24个月</el-radio>
                 </p>
                 <p style="line-height: 60px;border-bottom: 1px solid rgba(203,157,34,0.76);">
                     <span style="margin-left: 20px">年化利率：</span>
-                    <el-radio style="margin-left: 7%" v-model="big_lilv" label="0" border size="small">全部</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="big_lilv" label="0-6" border size="small">6%以下</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_lilv" label="6-8" border size="small">6%-8%</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="big_lilv" label="8-10" border size="small">8%-10%</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_lilv" label="10-12" border size="small">10%-12%</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_lilv" label="12" border size="small">12%以上</el-radio>
+                    <el-radio style="margin-left: 7%" v-model="big_lilv" label="" border size="small" @change="selectbypage(1)">全部</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="big_lilv" label="0.1-6" border size="small" @change="selectbypage(1)">6%以下</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_lilv" label="6-8" border size="small" @change="selectbypage(1)">6%-8%</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="big_lilv" label="8-10" border size="small" @change="selectbypage(1)">8%-10%</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_lilv" label="10-12" border size="small" @change="selectbypage(1)">10%-12%</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_lilv" label="12-100" border size="small" @change="selectbypage(1)">12%以上</el-radio>
                 </p>
                 <p style="line-height: 60px;border-bottom: 1px solid rgba(203,157,34,0.76); height: 120px">
                     <span style="margin-left: 20px">贷款规模：</span>
-                    <el-radio style="margin-left: 7%" v-model="big_ed" label="0" border size="small">全部</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="big_ed" label="0-100" border size="small">100万以下</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_ed" label="100-200" border size="small">100万-200万</el-radio>
-                    <el-radio style="margin-left: -0%" v-model="big_ed" label="200-300" border size="small">200万-300万</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_ed" label="300-500" border size="small">300万-500万</el-radio>
-                    <el-radio style="margin-left: 17.5%" v-model="big_ed" label="500-1000" border size="small">500万-1000万</el-radio>
-                    <el-radio style="margin-left: 0%" v-model="big_ed" label="1000" border size="small">1000万以上</el-radio>
+                    <el-radio style="margin-left: 7%" v-model="big_ed" label="" border size="small" @change="selectbypage(1)">全部</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="big_ed" label="1-1000000" border size="small" @change="selectbypage(1)">100万以下</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_ed" label="1000000-2000000" border size="small" @change="selectbypage(1)">100万-200万</el-radio>
+                    <el-radio style="margin-left: -0%" v-model="big_ed" label="2000000-3000000" border size="small" @change="selectbypage(1)">200万-300万</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_ed" label="3000000-5000000" border size="small" @change="selectbypage(1)">300万-500万</el-radio>
+                    <el-radio style="margin-left: 17.5%" v-model="big_ed" label="5000000-10000000" border size="small" @change="selectbypage(1)">500万-1000万</el-radio>
+                    <el-radio style="margin-left: 0%" v-model="big_ed" label="10000000-100000000" border size="small" @change="selectbypage(1)">1000万以上</el-radio>
                  </p>
             </div>
         </div>
@@ -56,12 +55,17 @@
                             <td width="40%">放款周期：{{dai.bddate}}个月</td>
                             <td rowspan="4"><el-button type="primary" @click="toinfo">查看详情</el-button></td>
                         </tr>
-                        <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}万</td>
+                        <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}</td>
                             <td>利率（年利化率）：<span style="color: red">{{dai.interest}}%</span></td></tr>
                         <tr>
                             <td colspan="2">
+                                贷款条件：<el-tag size="mini">身份认证</el-tag>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
                                 产品描述:
-                                <p style="color: #8c939d">金融信贷服务品牌,即现度金融旗下产品,运工智能和大数据风控技术,资金安全保障高,操作流程简单</p>
+                                <p style="color: #8c939d">{{dai.bigdaiTitle}}</p>
                             </td>
                         </tr>
                     </table>
@@ -70,12 +74,12 @@
                 <div style="width: 100%;float: left;text-align: center;margin-top: 20px">
                     <el-pagination
                             @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
-                            :current-page="currentPage4"
-                            :page-sizes="[100, 200, 300, 400]"
-                            :page-size="100"
+                            @current-change="selectbypage"
+                            :current-page.sync="pageNo"
+                            :page-sizes="[2, 4, 6, 8]"
+                            :page-size="pageSize"
                             layout="total, sizes, prev, pager, next, jumper"
-                            :total="400">
+                            :total="total">
                     </el-pagination>
                 </div>
             </div>
@@ -85,53 +89,59 @@
 <script>
     export default {
         name: "BigDai",
+        created(){
+          this.selectbypage(1);
+        },
         methods:{
             toinfo(){
                 this.$router.push({path: '/bigDai_info', params: {}});
-            }
+            },
+            selectbypage(val){
+                console.log("发起请求获得大额贷款信息：")
+                this.axios({url:'http://localhost:10086/bigdaiall_home',method:"post",
+                    withCredentials:true,
+                    data:{
+                    pageNo:val,
+                    pageSize:this.pageSize,
+                    seach_type:this.type,
+                    seach_date:this.big_Date,
+                    seach_lilv1:this.big_lilv.split('-')[0],
+                    seach_lilv2:this.big_lilv.split('-')[1],
+                    seach_money1:this.big_ed.split('-')[0],
+                    seach_money2:this.big_ed.split('-')[1]}
+                    }).then(res=>{
+                    var result=new Array();
+                    for (var i = 0; i <res.data.data.length ; i++) {
+                        var chil={
+                            bdname:res.data.data[i].big.bdname,
+                            interest:res.data.data[i].big.interest,
+                            bddate:res.data.data[i].big.bddate,
+                            small_money:res.data.data[i].big.smallMoney,
+                            big_money:res.data.data[i].big.bigMoney,
+                            bigdaiTitle:res.data.data[i].big.bigdaiTitle,
+                            url: "http://localhost:10086/img/"+res.data.data[i].big.bdpath
+                        }
+                        result.push(chil)
+                    }
+                    this.total=res.data.totalRecords
+                    this.bigdai=result;
+                });
+            },
         },
         data(){
             return{
+                pageNo:1,
+                pageSize:4,
+                total:0,
                 currentPage1: 5,
                 currentPage2: 5,
                 currentPage3: 5,
                 currentPage4: 4,
-                type:'0',
-                big_Date:'0',
-                big_lilv:'0',
-                big_ed:'0',
+                type:'',
+                big_Date:'',
+                big_lilv:'',
+                big_ed:'',
                 bigdai:[
-                    {
-                        bdname:"中行信用贷",
-                        interest:"0.03",
-                        bddate:"12",
-                        small_money:"10",
-                        big_money:"50",
-                        url: require("../../assets/yinhang/中国银行.jpg")
-                    },
-                    {
-                        bdname:"农行信用贷",
-                        interest:"0.05",
-                        bddate:"12",
-                        small_money:"20",
-                        big_money:"100",
-                        url: require("../../assets/yinhang/农业银行.jpg")
-                    },
-                    {
-                        bdname:"农行优惠贷",
-                        interest:"0.06",
-                        bddate:"24",
-                        small_money:"50",
-                        big_money:"200",
-                        url: require("../../assets/yinhang/农业银行.jpg")
-                    },{
-                        bdname:"中行石油贷",
-                        interest:"0.03",
-                        bddate:"12",
-                        small_money:"10",
-                        big_money:"50",
-                        url: require("../../assets/yinhang/中国银行.jpg")
-                    },
                 ]
             }
         }
