@@ -103,10 +103,31 @@
                         message: '两次输入的密码不一致，请重新输入'
                     });
                 }else{
-                    this.$message({
-                        type:'info',
-                        message: '通过'
-                    });
+                    this.axios({
+                        url:"http://localhost:10086/updatezfpws",
+                        method:"POST",
+                        withCredentials: true,
+                        data:{
+                        Ozfpws:this.Ozfpws,//支付密码：原密码
+                        Newzfpwsd:this.Newzfpwsd,//支付密码：新密码
+                        }
+                    }).then(res=>{
+                        if(res.data==1){
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '成功',
+                                message: h('i', { style: 'color: teal'}, '修改成功！')
+                            });
+                        }else{
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '失败',
+                                message: h('i', { style: 'color: teal'}, '原密码错误！')
+                            });
+                        }
+                    })
                 }
             },
             OnSubmit2(){
@@ -143,19 +164,76 @@
                         message: '两次输入的密码不一致，请重新输入'
                     });
                 }else{
-                    this.$message({
-                        type:'info',
-                        message: '通过'
-                    });
+                    this.axios({
+                        url:"http://localhost:10086/updatedlmm",
+                        method:"POST",
+                        withCredentials: true,
+                        data:{
+                        OPassword:this.OPassword,//登录密码：原密码
+                        NewPassword:this.NewPassword,//登录密码：新密码
+                        }
+                    }).then(res=>{
+                        // alert(res.data)
+                        if(res.data==1){
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '成功',
+                                message: h('i', { style: 'color: teal'}, '修改成功！')
+                            });
+                            setTimeout(() => {
+                                location. reload()
+                            }, 1000);
+
+                        }else{
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '失败',
+                                message: h('i', { style: 'color: teal'}, '原密码错误！')
+                            });
+
+                            setTimeout(() => {
+                                location. reload()
+                            }, 1000);
+                        }
+                    })
                 }
             },
-
+            PageRefresh(){
+                this.axios({
+                    url:"http://localhost:10086/refresh",
+                    method:"POST",
+                    withCredentials:true
+                }).then(res=>{
+                    // alert("返回的数据："+res.data)
+                    this.$store.commit('updateisLogin',1);
+                    this.$store.commit('updateUserName',res.data.uname);
+                    this.$store.commit('updateUserUid',res.data.usersid);
+                    this.$store.commit('updateUserUid',res.data.usersid);
+                    this.$store.state.user.touxiang=res.data.petname;
+                    this.$store.state.user.sex=res.data.sex;
+                    this.$store.state.user.phone=res.data.phone;
+                    this.$store.state.user.smalldai=res.data.smalldai;
+                    let h=res.data.cardid;
+                    this.$store.state.user.idcard=h.toString().substr(0,6)+"****"+h.toString().substr(10)
+                    let d=new Date(res.data.birthday);
+                    let year=d.getFullYear()
+                    let month=d.getMonth()
+                    let day=d.getDate()
+                    this.$store.state.user.birthday=year+"-"+parseInt(month+1)+"-"+day
+                }).catch()
+            }
+        ,
             reset(){
                 this.NewPassword=""
                 this.ConfirmPass=""
                 this.OPassword=""
                 this.isShow=!this.isShow
             }
+        },created(){
+
+            this.PageRefresh();
         }
     }
 </script>

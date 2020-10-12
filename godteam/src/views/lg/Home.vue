@@ -226,13 +226,8 @@
 import Bottom from "@/components/lg/Bottom";
 
 export default {
-  name: 'Home',
-  created:function(){
-    if(this.$store.state.user.isLogin!=0){
-      this.PageRefresh();
-    }
-  }
-,
+  name: 'Home'
+  ,
   methods:{
     selectbypage(val){
       console.log("发起请求获得大额贷款信息：")
@@ -257,14 +252,24 @@ export default {
       this.axios({
         url:"http://localhost:10086/refresh",
         method:"POST",
-        withCredentials:true,
-
+        withCredentials:true
       }).then(res=>{
-        alert("返回的数据："+res.data)
+        // alert("返回的数据："+res.data)
+        this.$store.commit('updateisLogin',1);
         this.$store.commit('updateUserName',res.data.uname);
         this.$store.commit('updateUserUid',res.data.usersid);
-        alert(this.$store.state.user.uid+":"+this.$store.state.user.username)
-        this.$router.push({path: '/', params: {}});
+        this.$store.commit('updateUserUid',res.data.usersid);
+        this.$store.state.user.touxiang=res.data.petname;
+        this.$store.state.user.sex=res.data.sex;
+        this.$store.state.user.phone=res.data.phone;
+        this.$store.state.user.smalldai=res.data.smalldai;
+        let h=res.data.cardid;
+        this.$store.state.user.idcard=h.toString().substr(0,6)+"****"+h.toString().substr(10)
+        let d=new Date(res.data.birthday);
+        let year=d.getFullYear()
+        let month=d.getMonth()
+        let day=d.getDate()
+        this.$store.state.user.birthday=year+"-"+parseInt(month+1)+"-"+day
       }).catch()
     }
     ,
@@ -342,7 +347,7 @@ export default {
           lcperiod:"每天",
           lcrate:"5.16",
           lctitle:"1万元起购 | 1元追加 | 9：00-15：00实时交易",
-          url: require("../../assets/中国银行.jpg")
+          url: require("../../assets/yinhang/中国银行.jpg")
         },
         {
           lcname:"天天盈",
@@ -350,7 +355,7 @@ export default {
           lcperiod:"每天",
           lcrate:"2.35",
           lctitle:"高流动性，高收益率，实时申赎！",
-          url: require("../../assets/中国银行.jpg")
+          url: require("../../assets/yinhang/中国银行.jpg")
         }
       ],
       licai2:[
@@ -360,7 +365,7 @@ export default {
           lcperiod:"每天",
           lcrate:"5.16",
           lctitle:"1万元起购 | 1元追加 | 9：00-15：00实时交易",
-          url: require("../../assets/农业银行.jpg")
+          url: require("../../assets/yinhang/农业银行.jpg")
         },
         {
           lcname:"天天盈",
@@ -368,7 +373,7 @@ export default {
           lcperiod:"每天",
           lcrate:"2.35",
           lctitle:"高流动性，高收益率，实时申赎！",
-          url: require("../../assets/农业银行.jpg")
+          url: require("../../assets/yinhang/农业银行.jpg")
         }
       ]
     }
@@ -377,6 +382,7 @@ export default {
   created(){
     this.smadaiinfo();
     this.selectbypage(1);
+    this.PageRefresh();
   },
   components: {
     Bottom

@@ -9,16 +9,26 @@
         <div style="width: 97%">
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="用户名"
-                              prop="name"
+                              prop="petname"
                               :rules="[
       { required: true, message: '用户名不能为空'}
     ]">
-                    <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
+                    <el-input v-model="ruleForm.petname" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item  label="密码" prop="pass" >
+                <el-form-item label="昵称"
+                              prop="uname"
+                              :rules="[
+      { required: true, message: '昵称不能为空'}
+    ]">
+                    <el-input v-model="ruleForm.uname" autocomplete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item  label="密码" prop="pass" :rules="[
+      { required: true, message: '密码不能为空'}]">
                     <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码" prop="checkPass" >
+                <el-form-item label="确认密码" prop="checkPass" :rules="[
+      { required: true, message: '确认密码不能为空'}]">
                     <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="性别">
@@ -27,10 +37,9 @@
                 </el-form-item>
                 <el-form-item label="出生日期"prop="date"
                               :rules="[
-      { required: true, message: '出生日期不能为空'}
-    ]">
+      { required: true, message: '出生日期不能为空'}]">
                     <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date" style="width: 100%;"></el-date-picker>
+                        <el-date-picker type="date"  placeholder="选择日期" v-model="ruleForm.date" style="width: 100%;"></el-date-picker>
                     </el-col>
                 </el-form-item>
                 <el-form-item
@@ -57,14 +66,14 @@
 <script>
 
     export default {
-        name: "reg3",
+        name: "reg1",
         data() {
 
 
             var validatePass = (rule, value, callback) => {
 
                 if (value === '') {
-                    callback(new Error('密码不能为空'));
+
                 } else {
                     if (this.ruleForm.checkPass !== '') {
                         this.$refs.ruleForm.validateField('checkPass');
@@ -74,7 +83,7 @@
             };
             var validatePass2 = (rule, value, callback) => {
                 if (value === '') {
-                    callback(new Error('确认密码不能为空'));
+
                 } else if (value !== this.ruleForm.pass) {
                     callback(new Error('两次输入密码不一致!'));
                 } else {
@@ -85,12 +94,13 @@
                 ruleForm: {
                     pass: '',
                     checkPass: '',
-                    name:'',
+                    petname:'',
                     radio:'',
                     date:'',
                     Phone:'',
-                    type:''
-
+                    type:'',
+                    sex:'',
+                    uname:''
                 },
                 rules: {
                     pass: [
@@ -103,10 +113,33 @@
                 }
             };
         },
+        computed: {
+            value() {
+                return this.ruleForm.type=this.$store.state.reguesr.uname;
+            }
+        },
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                      if(this.ruleForm.radio==2){
+                          this.ruleForm.sex="女"
+                      }else{
+                          this.ruleForm.sex="男"
+                      }
+
+
+                        this.$store.state.reguesr.petname=this.ruleForm.petname
+                        this.$store.state.reguesr.uspws=this.ruleForm.pass
+                        this.$store.state.reguesr.uname=this.ruleForm.uname
+                        this.$store.state.reguesr.sex=this.ruleForm.sex
+                        let d=this.ruleForm.date;
+                        let year=d.getFullYear()
+                        let month=d.getMonth()
+                        let day=d.getDate()
+                        this.$store.state.reguesr.birthday=year+"-"+parseInt(month+1)+"-"+day
+                        this.$store.state.reguesr.phone=this.ruleForm.Phone
+
                         this.$router.push({name: 'reg2',params:{}})
                     } else {
                         console.log('error submit!!');
