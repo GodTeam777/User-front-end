@@ -10,18 +10,18 @@
                     <table style="width: 100%;height: 80%;text-align: center">
                         <tr v-show="!isShow">
                             <td style="height: 15%;">原密码：</td>
-                            <td style="text-align: left"><el-input v-model="OPassword" placeholder="请输入登录密码"></el-input></td>
+                            <td style="text-align: left"><el-input :show-password="true" v-model="OPassword" placeholder="请输入登录密码"></el-input></td>
                         </tr>
                         <tr v-show="!isShow">
                             <td colspan="2" style="text-align: center"><el-button @click="OnSubmit1">下一步</el-button></td>
                         </tr>
                         <tr v-show="isShow">
                             <td style="height: 15%;">新密码：</td>
-                            <td style="text-align: left"><el-input v-model="NewPassword" placeholder="请输入新的登录密码"></el-input></td>
+                            <td style="text-align: left"><el-input :show-password="true" v-model="NewPassword" placeholder="请输入新的登录密码"></el-input></td>
                         </tr>
                         <tr v-show="isShow">
                             <td style="height: 15%;">确认密码：</td>
-                            <td style="text-align: left"><el-input v-model="ConfirmPass" placeholder="请再次输入新的登录密码"></el-input></td>
+                            <td style="text-align: left"><el-input :show-password="true" v-model="ConfirmPass" placeholder="请再次输入新的登录密码"></el-input></td>
                         </tr>
                         <tr v-show="isShow">
                             <td colspan="2" style="text-align: center"><el-button @click="reset">取消</el-button><el-button @click="OnSubmit">保存</el-button></td>
@@ -32,21 +32,21 @@
                     <table style="width: 100%;height: 80%;text-align: center">
                         <tr v-show="!isShow">
                             <td style="height: 15%;">原密码：</td>
-                            <td style="text-align: left"><el-input v-model="Ozfpws" placeholder="请输入支付密码"></el-input></td>
+                            <td style="text-align: left"><el-input v-model="Ozfpws" placeholder="请输入支付密码" maxlength="6"></el-input></td>
                         </tr>
                         <tr v-show="!isShow">
                             <td colspan="2" style="text-align: center"><el-button @click="OnSubmit2">下一步</el-button></td>
                         </tr>
                         <tr v-show="isShow">
                             <td style="height: 15%;">新密码：</td>
-                            <td style="text-align: left"><el-input v-model="Newzfpwsd" placeholder="请输入新的支付密码"></el-input></td>
+                            <td style="text-align: left"><el-input :show-password="true" v-model="Newzfpwsd" placeholder="请输入新的支付密码" maxlength="6"></el-input></td>
                         </tr>
                         <tr v-show="isShow">
                             <td style="height: 15%;">确认密码：</td>
-                            <td style="text-align: left"><el-input v-model="Confirmzfpws" placeholder="请再次输入新的支付密码"></el-input></td>
+                            <td style="text-align: left"><el-input :show-password="true" v-model="Confirmzfpws" placeholder="请再次输入新的支付密码" maxlength="6"></el-input></td>
                         </tr>
                         <tr v-show="isShow">
-                            <td colspan="2" style="text-align: center"><el-button @click="reset">取消</el-button><el-button @click="OnSubmitzfpws">保存</el-button></td>
+                            <td colspan="2" style="text-align: center"><el-button :show-password="true" @click="reset">取消</el-button><el-button @click="OnSubmitzfpws">保存</el-button></td>
                         </tr>
                     </table>
                 </el-tab-pane>
@@ -119,6 +119,9 @@
                                 title: '成功',
                                 message: h('i', { style: 'color: teal'}, '修改成功！')
                             });
+                            setTimeout(() => {
+                                location. reload()
+                            }, 1000);
                         }else{
                             const h = this.$createElement;
 

@@ -26,7 +26,16 @@
                 </tr>
                 <tr>
                     <td style="text-align: right">学位：</td>
-                    <td><el-input :disabled="isDiabl" v-model="degree" placeholder="请输入内容"></el-input></td>
+                    <td>
+                        <el-select :disabled="isDiabl" v-model="degree" placeholder="请选择学位">
+                            <el-option label="中专" value="中专"></el-option>
+                            <el-option label="大专" value="大专"></el-option>
+                            <el-option label="本科" value="本科"></el-option>
+                            <el-option label="研究生" value="研究生"></el-option>
+                            <el-option label="硕士" value="硕士"></el-option>
+                            <el-option label="博士" value="博士"></el-option>
+                        </el-select>
+                    </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">毕业证：</td>
@@ -35,8 +44,12 @@
                                 class="avatar-uploader"
                                 action="https://jsonplaceholder.typicode.com/posts/"
                                 :show-file-list="false"
-                                :on-success="handleAvatarSuccess"
-                                :before-upload="beforeAvatarUpload" v-loading="loading">
+
+                                   ref="upload"
+                                   :on-change="handleAvatarSuccess"
+                                   :http-request="uploadFile"
+
+                                   v-loading="loading">
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
@@ -47,7 +60,7 @@
                 </tr>
             </table>
             <div v-show="isShow" style="text-align: center;font-size: 9%;color: rgba(180,173,163,0.85);border-radius:7px 7px 7px 7px;width: 10%;height: 10%;margin-left:80%;margin-top: -53%;box-shadow:#F8F8FF 2px 2px 5px 5px;">
-                <br> 验证状态:<br> 审核中
+                <br> 验证状态:<br> <font v-show="status0" color="#909399">{{this.status0}}</font><font v-show="status1" color="#F56C6C">{{this.status1}}</font><font v-show="status2" color="#67C23A">{{this.status2}}</font>
             </div>
         </div>
     </div>
@@ -58,6 +71,11 @@
         name: "attestation",
         data(){
             return{
+                status0:"",
+                status1:"",
+                status2:"",
+                status:"",
+                formDate:"",
                 schoolname:"",
                 startDate:"",
                 endDate:"",
@@ -69,6 +87,46 @@
 
             }
         },
+        mounted() {
+            this.axios({
+                url:"http://localhost:10086/select_att_education",
+                method:"POST",
+                withCredentials: true,
+            }).then(res=>{
+                if(res.data!=""&&res.data!=null){
+                  if(res.data.status==0){
+                    this.isDiabl=true;
+                    this.isShow=true
+                    this.status0="待审核"
+                      this.schoolname=res.data.schoolname;
+                      this.startDate=new Date(res.data.beginDate);
+                      this.endDate=new Date(res.data.endDate);
+                      this.degree=res.data.degree
+                      this.imageUrl=res.data.spath
+                  }else if(res.data.status==1){
+                      this.status1="未通过"
+                      this.isShow=true
+                      this.schoolname=res.data.schoolname;
+                      this.startDate=new Date(res.data.beginDate);
+                      this.endDate=new Date(res.data.endDate);
+                      this.degree=res.data.degree
+                      this.imageUrl=res.data.spath
+                  }else if(res.data.status==2){
+                      this.isShow=true
+                      this.isDiabl=true
+                      this.status2="通过"
+                      this.schoolname=res.data.schoolname;
+                      this.startDate=new Date(res.data.beginDate);
+                      this.endDate=new Date(res.data.endDate);
+                      this.degree=res.data.degree
+                      this.imageUrl=res.data.spath
+                  }
+                }
+            }).catch(res=>{
+
+            })
+    }
+        ,
         methods:{
             OnSubmit(){
                if(this.schoolname==""||this.startDate==""||this.endDate==""||this.degree==""||this.imageUrl==""){
@@ -77,30 +135,34 @@
                        message: '请完成信息录入'
                    });
                }else{
-                   this.isDiabl=true
-                   this.isShow=!this.isShow
+                   this.formDate = new FormData()
+                   this.$refs.upload.submit();
+                   let config = {
+                       headers: {
+                           'Content-Type': 'multipart/form-data'
+                       }
+                   }
+                   this.axios.post("http://localhost:10086/upload",this.formDate, config).then(res => {
+                    alert(1)
+                   }).catch(res=>{
+
+                   })
+                   // this.isDiabl=true
+                   // this.isShow=!this.isShow
                }
 
     },
-            handleAvatarSuccess(res, file) {
+            uploadFile(file){
+                this.formDate.append('file', file.file);
+            },
+            handleAvatarSuccess(file) {
                 this.loading=true;
                 setTimeout(() => {
                     this.loading = false;
                 }, 1000);
                 this.imageUrl = URL.createObjectURL(file.raw);
             },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
 
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
-            }
         }
     }
 </script>

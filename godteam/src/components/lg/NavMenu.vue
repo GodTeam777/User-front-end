@@ -60,6 +60,9 @@
             handleSelect(key, keyPath) {
             },
             destory(){
+                this.axios.post("http://localhost:10086/logout").then(res=>{
+
+                })
                 location.reload();
             }
         }
