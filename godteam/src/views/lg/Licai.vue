@@ -107,7 +107,7 @@
                         lcperiod:"每天",
                         lcrate:"5.16",
                         lctitle:"1万元起购 | 1元追加 | 9：00-15：00实时交易",
-                        url: require("../../assets/中国银行.jpg")
+                        url: require("../../assets/yinhang/中国银行.jpg")
                     },
                     {
                         lcname:"天天盈",
@@ -115,7 +115,7 @@
                         lcperiod:"每天",
                         lcrate:"2.35",
                         lctitle:"高流动性，高收益率，实时申赎！",
-                        url: require("../../assets/中国银行.jpg")
+                        url: require("../../assets/yinhang/中国银行.jpg")
                     }
                 ]
             }

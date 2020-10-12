@@ -61,7 +61,7 @@
                         bddate:"12",
                         small_money:"10",
                         big_money:"50",
-                        url: require("../../assets/中国银行.jpg")
+                        url: require("../../assets/yinhang/中国银行.jpg")
                     }
             }
         }

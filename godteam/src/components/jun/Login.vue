@@ -29,7 +29,8 @@
                     huakaui:false
                 }
             };
-        },
+        }
+        ,
         methods: {
             childByValue: function (childValue) {
                 // childValue就是子组件传过来的值
@@ -68,11 +69,31 @@
                         }
                     }).then(res=>{
 
-                        this.$store.commit('updateisLogin',1);
-                            this.$store.commit('updateUserName',res.data.uname);
-                        this.$store.commit('updateUserUid',res.data.usersid);
-                        alert(this.$store.state.user.uid+":"+this.$store.state.user.username)
-                        this.$router.push({path: '/', params: {}});
+                      if(res.data.usersid>0){
+                          this.$store.commit('updateisLogin',1);
+                          this.$store.commit('updateUserName',res.data.uname);
+                          this.$store.commit('updateUserUid',res.data.usersid);
+                          this.$store.commit('updateUserUid',res.data.usersid);
+                          this.$store.state.user.sex=res.data.sex;
+                          this.$store.state.user.phone=res.data.phone;
+                          this.$store.state.user.smalldai=res.data.smalldai;
+                          let h=res.data.cardid;
+                          this.$store.state.user.idcard=h.toString().substr(0,6)+"****"+h.toString().substr(10)
+                          let d=new Date(res.data.birthday);
+                          let year=d.getFullYear()
+                          let month=d.getMonth()
+                          let day=d.getDate()
+                          this.$store.state.user.birthday=year+"-"+parseInt(month+1)+"-"+day
+                          // alert("返回的数据："+this.$store.state.user.uid+":"+this.$store.state.user.username)
+                          this.$router.push({path: '/', params: {}});
+                      }else {
+                          const h = this.$createElement;
+
+                          this.$notify({
+                              title: '失败',
+                              message: h('i', { style: 'color: teal'}, '用户名或密码错误！')
+                          });
+                      }
                     }).catch()
 
 

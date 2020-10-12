@@ -107,7 +107,7 @@
                         bddate:"12",
                         small_money:"10",
                         big_money:"50",
-                        url: require("../../assets/中国银行.jpg")
+                        url: require("../../assets/yinhang/中国银行.jpg")
                     },
                     {
                         bdname:"农行信用贷",
@@ -115,7 +115,7 @@
                         bddate:"12",
                         small_money:"20",
                         big_money:"100",
-                        url: require("../../assets/农业银行.jpg")
+                        url: require("../../assets/yinhang/农业银行.jpg")
                     },
                     {
                         bdname:"农行优惠贷",
@@ -123,14 +123,14 @@
                         bddate:"24",
                         small_money:"50",
                         big_money:"200",
-                        url: require("../../assets/农业银行.jpg")
+                        url: require("../../assets/yinhang/农业银行.jpg")
                     },{
                         bdname:"中行石油贷",
                         interest:"0.03",
                         bddate:"12",
                         small_money:"10",
                         big_money:"50",
-                        url: require("../../assets/中国银行.jpg")
+                        url: require("../../assets/yinhang/中国银行.jpg")
                     },
                 ]
             }
