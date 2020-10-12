@@ -22,13 +22,18 @@
                 </tr>
                 <tr>
                     <td style="text-align: right">房屋照：</td>
-                    <td><el-upload :disabled="isDiabl" style="width: 49%;"
+                    <td><el-upload :disabled="isDiabl" style="width: 53%;"
                             class="avatar-uploader"
                             action="https://jsonplaceholder.typicode.com/posts/"
                             :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar" v-loading="loading">
+
+                                   ref="upload"
+                                   :on-change="handleAvatarSuccess"
+                                   :http-request="uploadFile"
+
+                             v-loading="loading"
+                    >
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar" >
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload></td>
                 </tr>
@@ -37,7 +42,7 @@
                 </tr>
             </table>
             <div v-show="isShow" style="text-align: center;font-size: 9%;color: rgba(180,173,163,0.85);border-radius:7px 7px 7px 7px;width: 10%;height: 10%;margin-left:80%;margin-top: -53%;box-shadow:#F8F8FF 2px 2px 5px 5px;">
-                <br> 验证状态:<br> 审核中
+                <br> 验证状态:<br>  <font v-show="status0" color="#909399">{{this.status0}}</font><font v-show="status1" color="#F56C6C">{{this.status1}}</font><font v-show="status2" color="#67C23A">{{this.status2}}</font>
             </div>
         </div>
     </div>
@@ -48,6 +53,11 @@
         name: "attestation_house",
         data(){
             return{
+                formDate:'',
+
+                status0:"",
+                status1:"",
+                status2:"",
 
                 hname:"",
                 haddress:"",
@@ -58,6 +68,45 @@
                 isDiabl:false
             }
         },
+        mounted() {
+            this.axios({
+                url:"http://localhost:10086/select_att_house",
+                method:"POST",
+                withCredentials: true,
+            }).then(res=>{
+                if(res.data!=""&&res.data!=null){
+                    if(res.data.status==0){
+                        this.isDiabl=true;
+                        this.isShow=true
+                        this.status0="待审核"
+
+                        this.hname=res.data.hname;
+                        this.haddress=res.data.haddress;
+                        this.hdate=new Date(res.data.hdate);
+                        this.imageUrl=res.data.hpath
+
+                    }else if(res.data.status==1){
+                        this.status1="未通过"
+                        this.isShow=true
+                        this.hname=res.data.hname;
+                        this.haddress=res.data.haddress;
+                        this.hdate=new Date(res.data.hdate);
+                        this.imageUrl=res.data.hpath
+                    }else if(res.data.status==2){
+                        this.isShow=true
+                        this.isDiabl=true
+                        this.status2="通过"
+                        this.hname=res.data.hname;
+                        this.haddress=res.data.haddress;
+                        this.hdate=new Date(res.data.hdate);
+                        this.imageUrl=res.data.hpath
+                    }
+                }
+            }).catch(res=>{
+
+            })
+        }
+        ,
         methods:{
             OnSubmit(){
                 if(this.hname==""||this.haddress==""||this.hdate==""||this.imageUrl==""){
@@ -66,29 +115,71 @@
                         message: '请完成信息录入'
                     });
                 }else{
-                    this.isDiabl=true
-                    this.isShow=!this.isShow
+                    this.formDate = new FormData()
+                    this.$refs.upload.submit();
+                    let config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                    this.axios.post("http://localhost:10086/upload",this.formDate, config).then(res => {
+                        this.axios({
+                            url:"http://localhost:10086/att_house",
+                            method:"POST",
+                            withCredentials: true,
+                            data:{
+                                hname:this.hname,
+                                haddress:this.haddress,
+                                hdate:this.hdate
+                            }
+                        }).then(res=>{
+                            if(res.data==1){
+                                const h = this.$createElement;
+
+                                this.$notify({
+                                    title: '成功',
+                                    message: h('i', { style: 'color: teal'}, '提交成功！')
+                                });
+                                setTimeout(() => {
+                                    location. reload()
+                                }, 1500);
+                            }else {
+                                const h = this.$createElement;
+
+                                this.$notify({
+                                    title: '失败',
+                                    message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                                });
+                            }
+                        }).catch(res=>{
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '失败',
+                                message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                            });
+                        })
+                    }).catch(res=>{
+                        const h = this.$createElement;
+
+                        this.$notify({
+                            title: '失败',
+                            message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                        });
+                    })
+
                 }
 
             },
-            handleAvatarSuccess(res, file) {
+            uploadFile(file){
+                this.formDate.append('file', file.file);
+            },
+            handleAvatarSuccess(file) {
                 this.loading=true;
                 setTimeout(() => {
                     this.loading = false;
                 }, 1000);
                 this.imageUrl = URL.createObjectURL(file.raw);
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
             }
         }
     }

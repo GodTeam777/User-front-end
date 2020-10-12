@@ -143,12 +143,49 @@
                        }
                    }
                    this.axios.post("http://localhost:10086/upload",this.formDate, config).then(res => {
-                    alert(1)
-                   }).catch(res=>{
+                       this.axios({
+                           url:"http://localhost:10086/att_education",
+                           method:"POST",
+                           withCredentials: true,
+                           data:{
+                               schoolname:this.schoolname,
+                               startDate:this.startDate,
+                               endDate:this.endDate,
+                               degree:this.degree
+                           }
+                       }).then(res=>{
+                           if(res.data==1){
+                               const h = this.$createElement;
 
+                               this.$notify({
+                                   title: '成功',
+                                   message: h('i', { style: 'color: teal'}, '提交成功！')
+                               });
+                               setTimeout(() => {
+                                   location. reload()
+                               }, 1500);
+                           }else {
+                               const h = this.$createElement;
+
+                               this.$notify({
+                                   title: '失败',
+                                   message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                               });
+                           }
+                       }).catch(res=>{
+                           const h = this.$createElement;
+                           this.$notify({
+                               title: '失败',
+                               message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                           });
+                       })
+                   }).catch(res=>{
+                       const h = this.$createElement;
+                       this.$notify({
+                           title: '失败',
+                           message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                       });
                    })
-                   // this.isDiabl=true
-                   // this.isShow=!this.isShow
                }
 
     },
