@@ -123,7 +123,8 @@
                     sex:''
                 }
             };
-        },methods:{
+        },
+       methods:{
             uploadFile(file){
                 this.formDate.append('file', file.file);
                 this.isimg=true;
@@ -207,8 +208,6 @@
                                 location. reload()
                             }, 1000);
                             this.isShow=!this.isShow
-
-
                         }else{
                             const h = this.$createElement;
 

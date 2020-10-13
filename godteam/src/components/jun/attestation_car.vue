@@ -6,25 +6,29 @@
             <table style="margin-left: 12%;width: 60%;height: 80%;"border="0">
                 <tr>
                     <td style="text-align: right">车辆品牌：</td>
-                    <td><el-input :disabled="isDiabl" v-model="Vehiclebrand" placeholder="请输入内容"></el-input></td>
+                    <td><el-input :disabled="isDiabl" v-model="carbrand" placeholder="请输入内容"></el-input></td>
                 </tr>
                 <tr>
                     <td style="text-align: right">车牌号：</td>
-                    <td><el-input :disabled="isDiabl" v-model="CarNum" placeholder="请输入内容"></el-input></td>
+                    <td><el-input :disabled="isDiabl" v-model="carid" placeholder="请输入内容"></el-input></td>
                 </tr>
                 <tr>
                     <td style="text-align: right">登记地：</td>
-                    <td><el-input :disabled="isDiabl" v-model="RegAddress" placeholder="请输入内容"></el-input></td>
+                    <td><el-input :disabled="isDiabl" v-model="caraddress" placeholder="请输入内容"></el-input></td>
                 </tr>
                 <tr>
                     <td style="text-align: right">车辆照：</td>
                     <td>
-                        <el-upload :disabled="isDiabl" style="width: 50%"
+                        <el-upload :disabled="isDiabl" style="width: 54%;"
                                    class="avatar-uploader"
                                    action="https://jsonplaceholder.typicode.com/posts/"
                                    :show-file-list="false"
-                                   :on-success="handleAvatarSuccess"
-                                   :before-upload="beforeAvatarUpload" v-loading="loading">
+
+                                   ref="upload"
+                                   :on-change="handleAvatarSuccess"
+                                   :http-request="uploadFile"
+
+                                   v-loading="loading">
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
@@ -35,7 +39,7 @@
                 </tr>
             </table>
             <div v-show="isShow" style="text-align: center;font-size: 9%;color: rgba(180,173,163,0.85);border-radius:7px 7px 7px 7px;width: 10%;height: 10%;margin-left:80%;margin-top: -53%;box-shadow:#F8F8FF 2px 2px 5px 5px;">
-                <br> 验证状态:<br> 审核中
+                <br> 验证状态:<br><font v-show="status0" color="#909399">{{this.status0}}</font><font v-show="status1" color="#F56C6C">{{this.status1}}</font><font v-show="status2" color="#67C23A">{{this.status2}}</font>
             </div>
         </div>
     </div>
@@ -46,15 +50,62 @@
         name: "attestation_car",
         data(){
             return{
-                Vehiclebrand:"",
-                CarNum:"",
-                RegAddress:"",
+                formDate:'',
+
+                status0:"",
+                status1:"",
+                status2:"",
+
+                carbrand:"",
+                carid:"",
+                caraddress:"",
                 imageUrl:"",
+
                 isShow:false,
                 loading:false,
                 isDiabl:false
             }
         },
+        mounted() {
+
+            this.axios({
+                url:"http://localhost:10086/select_att_car",
+                method:"POST",
+                withCredentials: true,
+            }).then(res=>{
+                if(res.data!=""&&res.data!=null){
+                    if(res.data.status==0){
+                        this.isDiabl=true;
+                        this.isShow=true
+                        this.status0="待审核"
+
+                        this.carbrand=res.data.carbrand;
+                        this.carid=res.data.carid;
+                        this.caraddress=res.data.caraddress
+                        this.imageUrl=res.data.cpath
+
+                    }else if(res.data.status==1){
+                        this.status1="未通过"
+                        this.isShow=true
+                        this.carbrand=res.data.carbrand;
+                        this.carid=res.data.carid;
+                        this.caraddress=res.data.caraddress
+                        this.imageUrl=res.data.cpath
+                    }else if(res.data.status==2){
+                        this.isShow=true
+                        this.isDiabl=true
+                        this.status2="通过"
+                        this.carbrand=res.data.carbrand;
+                        this.carid=res.data.carid;
+                        this.caraddress=res.data.caraddress
+                        this.imageUrl=res.data.cpath
+                    }
+                }
+            }).catch(res=>{
+
+            })
+        }
+        ,
         methods:{
             OnSubmit(){
                 if(this.schoolname==""||this.startDate==""||this.endDate==""||this.degree==""||this.imageUrl==""){
@@ -63,29 +114,73 @@
                         message: '请完成信息录入'
                     });
                 }else{
-                    this.isDiabl=true
-                    this.isShow=!this.isShow
+
+                    this.formDate = new FormData()
+                    this.$refs.upload.submit();
+                    let config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                    this.axios.post("http://localhost:10086/upload",this.formDate, config).then(res => {
+                        this.axios({
+                            url:"http://localhost:10086/att_car",
+                            method:"POST",
+                            withCredentials: true,
+                            data:{
+                                carbran:this.carbrand,
+                                carid:this.carid,
+                                caraddress:this.caraddress
+                            }
+                        }).then(res=>{
+                            if(res.data==1){
+                                const h = this.$createElement;
+
+                                this.$notify({
+                                    title: '成功',
+                                    message: h('i', { style: 'color: teal'}, '提交成功！')
+                                });
+                                setTimeout(() => {
+                                    location. reload()
+                                }, 1500);
+                            }else {
+                                const h = this.$createElement;
+
+                                this.$notify({
+                                    title: '失败',
+                                    message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                                });
+                            }
+                        }).catch(res=>{
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '失败',
+                                message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                            });
+                        })
+                    }).catch(res=>{
+                        const h = this.$createElement;
+
+                        this.$notify({
+                            title: '失败',
+                            message: h('i', { style: 'color: red'}, '提交失败，请重新填写资料！')
+                        });
+                    })
+
+
                 }
 
             },
-            handleAvatarSuccess(res, file) {
+            uploadFile(file){
+                this.formDate.append('file', file.file);
+            },
+            handleAvatarSuccess(file) {
                 this.loading=true;
                 setTimeout(() => {
                     this.loading = false;
                 }, 1000);
                 this.imageUrl = URL.createObjectURL(file.raw);
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
             }
         }
     }

@@ -117,7 +117,43 @@
                         message: '请完成信息录入'
                     });
                 }else {
-                    this.isShow=!this.isShow
+                    this.axios({
+                        url:"http://localhost:10086/AddBankCard",
+                        method:"POST",
+                        withCredentials: true,
+                        data:{
+                            brankcard:this.inputcard.brankcard,
+                            region:this.inputcard.region,
+                            brankphone:this.inputcard.brankphone
+                        }
+                    }).then(res=>{
+                        if(res.data==1){
+                            const h = this.$createElement;
+
+                            this.$notify({
+                                title: '成功',
+                                message: h('i', { style: 'color: teal'}, '添加成功！')
+                            });
+                            setTimeout(() => {
+                                location. reload()
+                            }, 1000);
+                            this.isShow=!this.isShow
+                        }else{
+                           const h = this.$createElement;
+
+                                this.$notify({
+                                    title: '失败',
+                                    message: h('i', { style: 'color: red'}, '添加失败！')
+                            });
+                        }
+                    }).catch(res=>{
+                        const h = this.$createElement;
+
+                        this.$notify({
+                            title: '失败',
+                            message: h('i', { style: 'color: red'}, '添加失败！')
+                        });
+                    })
                 }
             }
         }

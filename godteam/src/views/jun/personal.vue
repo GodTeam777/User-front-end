@@ -9,7 +9,7 @@
                     </td>
                     <td>
                         <span style="font-size: 130%;color:black">{{this.$store.state.user.username}}</span><br>
-                        <span style="font-size: 9%;color: rgba(180,173,163,0.85)">可借额度:{{$store.state.user.smalldai}}</span><br>
+                        <span style="font-size: 9%;color: rgba(180,173,163,0.85)">总额度:{{$store.state.user.smalldai}}</span><br>
                         <span style="font-size: 9%;color: rgba(180,173,163,0.85)">15日待还:{{smadaimsg.yinhuan}}</span>
 
                     </td>
