@@ -11,34 +11,14 @@
        <div style="width: 97%">
            <el-form :model="numberValidateForm" :rules="rules" ref="numberValidateForm"  label-width="100px" class="demo-ruleForm">
                <el-form-item label="身份证号码" prop="card">
-                   <el-input type="card" v-model="numberValidateForm.card" autocomplete="off"></el-input>
+                   <el-input type="card" v-model="numberValidateForm.card" autocomplete="off" maxlength="18"></el-input>
                </el-form-item>
                <el-form-item label="真实姓名"
                              prop="name">
                    <el-input v-model="numberValidateForm.name" autocomplete="off"></el-input>
                </el-form-item>
-               <el-form-item label="身份证照片" prop="card">
+               <el-form-item label="身份证照片" prop="cardinfo">
                    <div style="width: 100%;">
-                       <div style="width:30%;float: right">
-                   <el-upload style="width: 95.8%;height:180px;"
-                           class="avatar-uploader"
-                           action="https://jsonplaceholder.typicode.com/posts/"
-                           :show-file-list="false"
-                              :auto-upload="false"
-
-                              ref="upload2"
-                              :on-change="handleAvatarSuccess2"
-                              :http-request="uploadFile2"
-
-                              accept=".jpg,.jpeg,.png,.JPG,.JPEG"
-                             v-loading="loading2">
-                       <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
-                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                   </el-upload>
-
-
-                       </div>
-                       <div style="float: right;margin-right: 13%">（正反各一张）</div>
                        <div style="width:30%">
 
 
@@ -76,7 +56,7 @@
             var checkCard = (rule, value, callback) => {
 
 
-               if(value.toString().length!=16){
+               if(value.toString().length!=18){
                    this.numberValidateForm.showif=false;
                }else{
                    this.numberValidateForm.showif=true;
@@ -84,16 +64,16 @@
             };
             return {
                 loading1: false,
-                loading2: false,
+
                 imageUrl1: '',
-                imageUrl2: '',
+
                 formDate1:"",
-                formDate2:"",
+
                 numberValidateForm: {
                     name:'',
                     islength:false,
                     cardnum1:0,
-                    cardnum2:16,
+                    cardnum2:18,
                     card: '',
                     cardinfo: '',
                     showif:false
@@ -110,21 +90,11 @@
             uploadFile1(file){
                 this.formDate1.append('file', file.file);
             },
-            uploadFile2(file){
-                this.formDate2.append('file', file.file);
-            },
+
             goback() {
                 this.$router.go(-1)
             },
-            handleAvatarSuccess2(file, fileList) {
-                this.loading2=true;
-                setTimeout(() => {
-                    this.loading2 = false;
-                }, 1000);
-                this.imageUrl2 = URL.createObjectURL(file.raw);
 
-
-            },
             handleAvatarSuccess1(file) {
 
                 this.loading1=true;
@@ -136,7 +106,6 @@
             resetForm(numberValidateForm) {
                 this.$refs[numberValidateForm].resetFields();
                 this.imageUrl1="";
-                this.imageUrl2="";
             },
             submitForm(numberValidateForm) {
 
@@ -156,12 +125,13 @@
                            message: '请输入真实姓名'
                        });
                    }else
-                   if(this.imageUrl1==""||this.imageUrl2==""){
+                   if(this.imageUrl1==""){
                        this.$message({
                            type:'info',
                            message: '请点击上传身份证照'
                        });
                    }else{
+
                        this.formDate1 = new FormData()
                        this.$refs.upload1.submit();
                        let config = {
@@ -171,17 +141,10 @@
                        }
                        this.axios.post("http://localhost:10086/upload",this.formDate1, config).then(res => {
                            // alert("图片上传完成1")
-                           this.formDate2 = new FormData()
-                           this.$refs.upload2.submit();
 
-                           this.axios.post("http://localhost:10086/upload",this.formDate2, config).then(res => {
-                               // alert("图片上传完成2")
-                               this.$store.state.reguesr.name=this.numberValidateForm.name
-                               this.$store.state.reguesr.idcard=this.numberValidateForm.card
-                               this.$router.push({name: 'reg3',params:{}})
-                           }).catch(res => {
-                               console.log(res);
-                           })
+                           this.$store.state.reguesr.name=this.numberValidateForm.name;
+                           this.$store.state.reguesr.idcard=this.numberValidateForm.card;
+                           this.$router.push({name: 'reg3',params:{}})
                        }).catch(res => {
                            console.log(res);
                        })

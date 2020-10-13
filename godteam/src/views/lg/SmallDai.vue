@@ -221,7 +221,28 @@
 
         methods:{
             tosmallDai_children(){
-                this.$router.push({path: '/smallDai_children', query: {'lilv':this.smadaimsg.lilv}});
+                this.axios({
+                    url:"http://localhost:10086/refresh",
+                    method:"POST",
+                    withCredentials:true
+                }).then(res=>{
+                    if(res.data.status==1){
+                        this.$router.push({path: '/smallDai_children', query: {'lilv':this.smadaimsg.lilv}});
+                    }else {
+                        this.$confirm('当前借款不可用，请保持良好的信用，如有疑问，请联系客服！', '提示', {
+                            confirmButtonText: '联系客服',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(() => {
+                            this.$router.push({path: '/about', query: {}});
+                        }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '取消操作'
+                            });
+                        });
+                    }
+                })
             },
             toMoney(num){
                 num = num.toLocaleString();

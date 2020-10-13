@@ -114,7 +114,28 @@
                     }
                     //alert(is)
                     if(is) {
-                        this.$router.push({path: '/big_Dai_chlden', query: {interest:this.bigdai.interest,bddate:this.bigdai.bddate,bid:this.$route.query.bdid,small_money:this.bigdai.small_money,big_money:this.bigdai.big_money}});
+                            this.axios({
+                                url:"http://localhost:10086/refresh",
+                                method:"POST",
+                                withCredentials:true
+                            }).then(res=>{
+                                if(res.data.status==1){
+                                    this.$router.push({path: '/big_Dai_chlden', query: {interest:this.bigdai.interest,bddate:this.bigdai.bddate,bid:this.$route.query.bdid,small_money:this.bigdai.small_money,big_money:this.bigdai.big_money}});
+                                }else {
+                                    this.$confirm('当前借款不可用，请保持良好的信用，如有疑问，请联系客服！', '提示', {
+                                        confirmButtonText: '联系客服',
+                                        cancelButtonText: '取消',
+                                        type: 'warning'
+                                    }).then(() => {
+                                        this.$router.push({path: '/about', query: {}});
+                                    }).catch(() => {
+                                        this.$message({
+                                            type: 'info',
+                                            message: '取消操作'
+                                        });
+                                    });
+                                }
+                            })
                     }else{
                         //("信息未满足条件，请前往认证")
                         this.$confirm('个人信息未满足条件，请前往认证, 是否继续?', '提示', {
