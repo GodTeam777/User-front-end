@@ -53,7 +53,7 @@
         <h3 style="color: Window">{{smadaimsg.yinhuan}}</h3>
         <div style="margin-left: 26%;margin-top: -17%;text-align: center">
         <el-button size="500px" style="font-size: 40px;color: #409EFF;font-weight: 500;" @click="tosmalldai" round>立即借款</el-button><br/>
-        <span style=""><a style="" href="#" class="smallDai" >提前还款</a>&nbsp;|&nbsp;<a style="font-size: 15px" href="#" class="smallDai">我要提额</a></span>
+        <span style=""><a style="" href="#" class="smallDai" >提前还款</a>&nbsp;|&nbsp;<a style="font-size: 15px" href="#" class="smallDai" @click="tie">我要提额</a></span>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
           <tr>
             <td rowspan="4"> <el-image style="width: 100px;height: 100px" :src="dai.url" fit="fill"></el-image></td>
             <td width="80%">产品名: <span style="font-weight: 600">{{dai.bdname}}</span></td>
-            <td rowspan="4"><el-button type="primary" @click="tobigdaiinfo">查看详情</el-button></td>
+            <td rowspan="4"><el-button type="primary" @click="tobigdaiinfo(dai.bdid)">查看详情</el-button></td>
           </tr>
           <tr><td>放款周期：{{dai.bddate}}个月</td></tr>
           <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}</td></tr>
@@ -240,6 +240,7 @@ export default {
             bddate:res.data.data[i].big.bddate,
             small_money:res.data.data[i].big.smallMoney,
             big_money:res.data.data[i].big.bigMoney,
+            bdid:res.data.data[i].big.bdid,
             url: "http://localhost:10086/img/"+res.data.data[i].big.bdpath
           }
           result.push(chil)
@@ -273,6 +274,20 @@ export default {
       }).catch()
     }
     ,
+    tie(){
+      this.$confirm('完成学历认证，车辆认证，房屋认证后额度会进一步提升，是否前往认证', '提示', {
+        confirmButtonText: '前往认证',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).then(() => {
+        this.$router.push({path: '/attestation_education', query: {}});
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消操作'
+        });
+      });
+    },
     tologin:function () {
       this.$router.push({path: '/login', params: {}})
     },
@@ -285,8 +300,8 @@ export default {
     tolicai(){
       this.$router.push({path: '/licai', params: {}});
     },
-    tobigdaiinfo(){
-      this.$router.push({path: '/bigDai_info', params: {}});
+    tobigdaiinfo(val){
+      this.$router.push({path: '/bigDai_info', query: {bdid:val}});
     },
     tolicaiinfo(){
       this.$router.push({path: '/licai_info', params: {}});

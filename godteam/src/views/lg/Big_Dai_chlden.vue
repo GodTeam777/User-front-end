@@ -12,7 +12,8 @@
                     <el-input v-model.number="form.smalldai" style="width: 50%;margin-left: -40%"></el-input>
                 </el-form-item>
                 <el-form-item label="借款期限" label-width="36%">
-                    <el-radio style="margin-left: -40%" v-model="form.dai_date" :label="form.dai_date" border size="small">12个月</el-radio>
+                    <el-radio style="margin-left: -40%" v-model="form.dai_date" :label="form.dai_date" border size="small">
+                        {{form.dai_date}}个月</el-radio>
                     <span style="position: absolute">每期应还：{{meiri}}</span>
                 </el-form-item>
 
@@ -21,11 +22,11 @@
                         <el-option
                                 v-for="item in cities"
                                 :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
+                                :label="item[1]"
+                                :value="item[1]"
                         >
-                            <span style="float: left">{{ item.label }}</span>
-                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                            <span style="float: left">{{ item[1] }}</span>
+                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item[0] }}</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -34,11 +35,11 @@
                         <el-option
                                 v-for="item in cities"
                                 :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
+                                :label="item[1]"
+                                :value="item[1]"
                         >
-                            <span style="float: left">{{ item.label }}</span>
-                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                            <span style="float: left">{{ item[1] }}</span>
+                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item[0] }}</span>
                         </el-option>
                     </el-select>
 
@@ -102,10 +103,29 @@
         name: "Big_Dai_chlden",
         methods:{
             tobefore(){
-                if (this.password.length===6){
+                if (this.password.length==6){
+                    //console.log("支付密码"+this.password)
                     this.pvidate='';
                     this.centerDialogVisible=false;
-                    this.$router.push({path: '/big_Dai_childen2', params: {}});
+                    console.log("支付密码"+this.password)
+                    this.axios({url:'http://localhost:10086/zhifupswp',method:"post",withCredentials:true,data:{zhifupws:this.password}}).then(res=>{
+                        console.log("返回支付密码数据"+res.data)
+                        if(res.data==1){
+                            this.axios({url:'http://localhost:10086/bigdaiimp',method:"post",withCredentials:true,data:{form:this.form}}).then(res=> {
+                                if (res.data) {
+                                    this.$router.push({path: '/big_Dai_childen2', params: {}});
+                                }else{
+                                    alert("贷款失败，请联系客服")
+                                }
+                            })
+                            alert("对")
+                        }else{
+                            this.pvidate="支付密码错误！";
+                            this.password='';
+                            this.judgePassword();
+                            this.centerDialogVisible=true;
+                        }
+                    })
                 }else{
                     this.pvidate="请输入正确支付密码！";
                 }
@@ -121,7 +141,7 @@
             },
             submitForm(formName) {
                 this.form.isnu=this.form.brank1!=""&&this.form.brank2!="";
-                if (this.form.isnu&&this.form.smalldai!="") {
+                if (this.form.isnu&&this.form.smalldai!=""&&this.form.smalldai<=this.$route.query.big_money&&this.form.smalldai>=this.$route.query.small_money) {
                     this.centerDialogVisible=true;
                 }
                 this.$refs[formName].validate((valid) => {
@@ -163,8 +183,32 @@
                     this.surePassword();
                 }
             },
+            getbank(){
+                this.axios({url:'http://localhost:10086/mybankcard',method:"post",withCredentials:true}).then(res=>{
+                    var opda=new Array();
+                    for (var i=0;i<res.data.length;i++){
+                        var item=new Array();
+                        item[0]=res.data[i][0].bname;
+                        item[1]=res.data[i][1].bankcard;
+                        opda[i]= item;
+                    }
+                    this.cities=opda;
+                    console.log("数据"+opda);
+                })
+            }
         },
         data() {
+            var validatesmadai = (rule, value, callback) => {
+                if (value > this.$route.query.big_money) {
+                    callback(new Error('额度不足，可借额度为'+this.$route.query.big_money));
+                }
+                if (value < this.$route.query.small_money) {
+                    callback(new Error('最低贷款额度为：'+this.$route.query.small_money));
+                }
+                else {
+                    callback();
+                }
+            };
             var checkbrank1 = (rule, value, callback) => {
 
                 if (this.form.brank1=="") {
@@ -190,8 +234,9 @@
                 show6: false,
                 form: {
                     isnu:false,
-                    smalldai: 500000,
-                    dai_date:'12',
+                    bdid:this.$route.query.bid,
+                    smalldai: '',
+                    dai_date:this.$route.query.bddate,
                     meiri:'0',
                     brank1: '',
                     brank2: ''
@@ -199,7 +244,8 @@
                 rules: {
                     smalldai: [
                         { required: true, message: '金额不能为空'},
-                        { type: 'number', message: '年龄必须为数字值'}
+                        { type: 'number', message: '金额必须为数字值'},
+                        { validator: validatesmadai, trigger: 'blur' }
                     ],
                     value1: [
                         { validator: checkbrank1, trigger: 'change' }
@@ -208,21 +254,20 @@
                         { validator: checkbrank2, trigger: 'change' }
                     ]
                 },
-                cities: [{
-                    value: '邮政',
-                    label: '6222******3901'
-                },{
-                    value: '建设',
-                    label: '6221******0012'
-                }]
+                cities: []
             }
         },
         computed:{
             meiri:function () {
-                var num= (this.form.smalldai*0.00097*30)+(this.form.smalldai/this.form.dai_date);
+                var num= (this.form.smalldai*this.$route.query.interest/100/365)+(this.form.smalldai/this.form.dai_date);
                 num=num.toFixed(2);
+                this.form.meiri=num;
                 return num;
             }
+        },
+        created() {
+            this.getbank(),
+                this.form.dai_date=this.$route.query.bddate;
         }
     }
 </script>
