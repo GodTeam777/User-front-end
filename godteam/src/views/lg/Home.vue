@@ -397,12 +397,8 @@ export default {
   created(){
     this.smadaiinfo();
     this.selectbypage(1);
-
-    this.PageRefresh();
     this.show();
-
     this.getallmoneypro(1);
-
   },
   components: {
     Bottom
