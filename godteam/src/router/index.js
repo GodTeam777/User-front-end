@@ -9,6 +9,10 @@ import dailynews from '../components/jun/dailynews'
 import basics from '../components/jun/basics'
 import UpdatePass from '../components/jun/UpdatePass'
 import bankcar from '../components/jun/bankcard'
+
+import proOrder from '../components/jun/proOrder'
+import earnings from '../components/jun/earnings'
+
 import wholesaleOrder from '../components/jun/wholesaleOrder'
 import pettyloanOrder from '../components/jun/pettyloanOrder'
 import attestation_education from '../components/jun/attestation_education'
@@ -74,6 +78,16 @@ const routes = [
         path:'/bankcard',            //二级的默认路由（此path指向上一级，即path:'/about'）
         name:'bankcard',
         component:bankcar
+      },
+      {                      //二级路由
+        path:'/proOrder',            //二级的默认路由（此path指向上一级，即path:'/about'）
+        name:'proOrder',
+        component:proOrder
+      },
+      {                      //二级路由
+        path:'/earnings',            //二级的默认路由（此path指向上一级，即path:'/about'）
+        name:'earnings',
+        component:earnings
       },
       {                      //二级路由
         path:'/pettyloanOrder',            //二级的默认路由（此path指向上一级，即path:'/about'）

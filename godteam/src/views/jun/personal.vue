@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 690px;">
+    <div style="height: 800px;">
         <div style="width: 20%;height: 80%;margin-left: 4%;margin-top: 0.7%;">
         <div style="margin-left:16%;border: #F5F5F5 solid 1px;box-shadow:#F8F8FF 2px 2px 5px 5px;width: 80%;height: 20%;border-radius:9px 9px 9px 9px;">
             <table style="width: 100%;height: 100%;">
@@ -36,6 +36,17 @@
                                 <i class="el-icon-bank-card"></i>
                                 <span slot="title">银行卡</span>
                             </el-menu-item>
+
+                            <el-menu-item index="/proOrder" >
+                                <i class="el-icon-shopping-bag-2"></i>
+                                <span slot="title">理财产品购买管理</span>
+                            </el-menu-item>
+
+<!--                            <el-menu-item index="/earnings" >-->
+<!--                                <i class="el-icon-s-finance"></i>-->
+<!--                                <span slot="title">收益中心</span>-->
+<!--                            </el-menu-item>-->
+
                             <el-submenu index="1">
                                 <template slot="title">
                                     <i class="el-icon-s-order"></i>
@@ -46,7 +57,6 @@
                                     <el-menu-item index="/wholesaleOrder"> <i class="el-icon-document"></i>大额贷款记录</el-menu-item>
                                 </el-menu-item-group>
                             </el-submenu>
-
                                 <el-submenu index="2">
                                     <template slot="title">
                                         <i class="el-icon-medal"></i>
@@ -64,7 +74,7 @@
                 </el-row>
             </div>
         </div>
-        <div style="width: 70%;float: right;margin-top:-36.4%;left:25%;height: 620px;position: absolute">
+            <div style="width: 70%;float: right;margin-top:-45.4%;left:25%;height: 820px;position: absolute">
             <router-view></router-view>
         </div>
     </div>

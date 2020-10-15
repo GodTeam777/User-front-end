@@ -85,7 +85,10 @@
                           let day=d.getDate()
                           this.$store.state.user.birthday=year+"-"+parseInt(month+1)+"-"+day
                           // alert("返回的数据："+this.$store.state.user.uid+":"+this.$store.state.user.username)
-                          this.$router.push({path: '/', params: {}});
+                          setTimeout(() => {
+                              this.$router.push({path: '/', params: {}});
+                          }, 500);
+                          this.isShow=!this.isShow
                       }else {
                           const h = this.$createElement;
 

@@ -3,7 +3,7 @@
         银行卡信息
         <hr style="width: 100%;margin-top: 1%">
         <div v-show="!isShow" style="margin:0 auto;width: 80%;height: 93%;border: white solid 1px">
-            <div v-for="card in cardList" style="height:18%;border:red solid 0px;float: left;font-size: 14px;margin-top: 18px;margin-left:2%;margin-bottom:1%;width: 56%;margin-right: 1%;border-radius:13px 13px 13px 13px; box-shadow:#F8F8FF 3px 3px 6px 6px;border: #F5F5F5 solid 1px;">
+            <div v-for="card in cardList" style="height:15%;border:red solid 0px;float: left;font-size: 14px;margin-top: 18px;margin-left:2%;margin-bottom:1%;width: 56%;margin-right: 1%;border-radius:13px 13px 13px 13px; box-shadow:#F8F8FF 3px 3px 6px 6px;border: #F5F5F5 solid 1px;">
                <div style="width:100%;borderRadius:13px 13px 13px 13px">
 
                    <table border="0" style="width: 100%">
@@ -41,7 +41,7 @@
 
             </div>
             </div>
-            <div style="cursor: pointer;position:relative;margin-left:2%;margin-top:55%;border: #CCCCCC solid 1px;width: 56%;height: 18%;border-radius:13px 13px 13px 13px;">
+            <div style="cursor: pointer;position:relative;margin-left:2%;margin-top:65%;border: #CCCCCC solid 1px;width: 56%;height: 18%;border-radius:13px 13px 13px 13px;">
                 <table border="0" style="margin: 0 auto">
                     <tr>
                         <td><br><el-button style="margin-top: 10%" @click="isShow=!isShow" plain><span style="color: #CCCCCC;">添加银行卡+</span></el-button></td>

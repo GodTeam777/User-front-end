@@ -163,7 +163,7 @@
                                });
                                setTimeout(() => {
                                    location. reload()
-                               }, 1500);
+                               }, 2500);
                            }else {
                                const h = this.$createElement;
 
