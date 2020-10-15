@@ -198,7 +198,7 @@
                 });
                 },
             ScrollUp() {
-                setInterval(_ => {
+                this.intnum=setInterval(_ => {
                     if(this.activeIndex < this.prizeList.length) {
                         this.prizeList.push(this.prizeList[this.activeIndex ])
                         this.activeIndex += 1;

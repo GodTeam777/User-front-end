@@ -118,7 +118,7 @@
                                     alert("贷款失败，请联系客服")
                                 }
                             })
-                            alert("对")
+                            //alert("对")
                         }else{
                             this.pvidate="支付密码错误！";
                             this.password='';
@@ -259,7 +259,7 @@
         },
         computed:{
             meiri:function () {
-                var num= (this.form.smalldai*this.$route.query.interest/100/365)+(this.form.smalldai/this.form.dai_date);
+                var num= (this.form.smalldai*this.$route.query.interest/100/365*30)+(this.form.smalldai/this.form.dai_date);
                 num=num.toFixed(2);
                 this.form.meiri=num;
                 return num;

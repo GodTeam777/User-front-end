@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 500px;text-align: center">
+    <div style="height: 600px;text-align: center">
         <el-steps :active="2" simple>
             <el-step title="小额贷款" icon="el-icon-bank-card"></el-step>
             <el-step title="填写资料" icon="el-icon-edit"></el-step>
