@@ -9,7 +9,7 @@
                 <hr style="width: 100%;margin-top: 1%">
                 <div style="margin:0 auto;width: 100%;height: 93%;border: red solid 0px">
                     <div v-for="petty in pettyloan" style="float: left;font-size: 14px;height: 90px;margin-top: 18px;margin-bottom:1%;width: 100%;margin-right: 1%;border-radius:8px 8px 8px 8px; box-shadow:#F8F8FF 2px 2px 5px 5px" class="tb1">
-                        <table style="margin-left:0%;width:100%;height:90px;border-collapse: collapse;" border="0">
+                        <table style="margin-left:3%;width:100%;height:90px;border-collapse: collapse;" border="0">
                             <tr>
                                 <td style="border-bottom: rgba(180,173,163,0.85) dashed 1px;width: 10%;">订单编号</td>
                                 <td style="border-bottom: rgba(180,173,163,0.85) dashed 1px;width: 13%;">产品名</td>

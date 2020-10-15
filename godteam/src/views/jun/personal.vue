@@ -39,13 +39,13 @@
 
                             <el-menu-item index="/proOrder" >
                                 <i class="el-icon-shopping-bag-2"></i>
-                                <span slot="title">理财产品购买记录</span>
+                                <span slot="title">理财产品购买管理</span>
                             </el-menu-item>
 
-                            <el-menu-item index="/earnings" >
-                                <i class="el-icon-s-finance"></i>
-                                <span slot="title">收益中心</span>
-                            </el-menu-item>
+<!--                            <el-menu-item index="/earnings" >-->
+<!--                                <i class="el-icon-s-finance"></i>-->
+<!--                                <span slot="title">收益中心</span>-->
+<!--                            </el-menu-item>-->
 
                             <el-submenu index="1">
                                 <template slot="title">
