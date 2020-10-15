@@ -237,7 +237,7 @@ import Bottom from "@/components/lg/Bottom";
 export default {
   name: 'Home',
   methods:{
-<<<<<<< HEAD
+
       //新闻查看
       show:function(){
           this.axios.get('http://localhost:10086/selectAll').then(res=>{
@@ -247,7 +247,7 @@ export default {
 
 
 
-=======
+
     qiehuantype(val){
       this.licaitype=val;
       if(val==0){
@@ -276,7 +276,7 @@ export default {
         this.licai=result;
       })
     },
->>>>>>> 3e15133550e4636cc6c79ca76f29dc38172b75ef
+
     selectbypage(val){
       console.log("发起请求获得大额贷款信息：")
       this.axios({url:'http://localhost:10086/bigdaiall_home',method:"post",withCredentials:true,data:{pageNo:val,pageSize:4}}).then(res=>{
@@ -397,12 +397,12 @@ export default {
   created(){
     this.smadaiinfo();
     this.selectbypage(1);
-<<<<<<< HEAD
+
     this.PageRefresh();
     this.show();
-=======
+
     this.getallmoneypro(1);
->>>>>>> 3e15133550e4636cc6c79ca76f29dc38172b75ef
+
   },
   components: {
     Bottom

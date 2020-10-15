@@ -77,7 +77,6 @@
                     this.list=res.data;
                     //时间处理
                     let date4=new Date(this.list.newsDate);
-                    alert(date4)
                     let d4;
                     if(date4.getDate()>10){
                         d4=date4.getDate()
