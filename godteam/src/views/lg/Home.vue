@@ -9,16 +9,16 @@
           </el-carousel-item>
         </el-carousel>
         <br/>
+
         <font style="color: #409EFF;position: center;font:20px Extra large;">新闻中心</font><br/><hr/>
+        <div v-for="my in xinwen">
         <ul style="list-style: none;line-height: 50px">
-          <li><span style="position: absolute;margin-left: 19%;font-weight: 600;"><i style="color: rgba(213,59,33,0.85);">1</i></span><a href="#" class="smallDai" style="font-size: 15px">招联金融五年=8精进的四条路径</a><br/><hr/></li>
-          <li><span style="position: absolute;margin-left: 19%;font-weight: 600"><i style="color: rgba(55,134,213,0.85);">2</i></span><a href="#" class="smallDai" style="font-size: 15px">公司启动第二期“微光计划“</a><br/><hr/></li>
-          <li><span style="position: absolute;margin-left: 19%;font-weight: 600"><i style="color: rgba(213,195,28,0.85);">3</i></span><a href="#" class="smallDai" style="font-size: 15px">招联金融向湖北疫区捐款600万元</a><br/><hr/></li>
-          <li><span style="position: absolute;margin-left: 19%;"><i>4</i></span><a href="#" class="smallDai" style="font-size: 15px">招联金融首期金融债券成功发行</a><br/><hr/></li>
-          <li><span style="position: absolute;margin-left: 19%;"><i>5</i></span><a href="#" class="smallDai" style="font-size: 15px">招联金融三项“硬科技”亮相2019年</a><br/><hr/></li>
-          <li><span style="position: absolute;margin-left: 19%;"><i>6</i></span><a href="#" class="smallDai" style="font-size: 15px">贷款市场报价利率问答（Q&A）</a><br/><hr/></li>
-          <li><span style="position: absolute;margin-left: 19%;"><i>7</i></span><a href="#" class="smallDai" style="font-size: 15px">识别与防范非法集资必备小知识</a><br/><hr/></li>
-        </ul>
+
+
+
+          <li><span style="position: absolute;margin-left: 19%;font-weight: 600;"><i style="color: rgba(213,59,33,0.85);"></i></span><a href="#" class="smallDai" style="font-size: 15px">{{my.newsTitle}}</a><br/><hr/></li>
+
+        </ul> </div>
         <span style="margin-left: 58%"><a href="#" class="smallDai" style="font-size: 15px">了解更多>>></a></span>
       </div>
 
@@ -237,6 +237,17 @@ import Bottom from "@/components/lg/Bottom";
 export default {
   name: 'Home',
   methods:{
+
+      //新闻查看
+      show:function(){
+          this.axios.get('http://localhost:10086/selectAll').then(res=>{
+           this.xinwen=res.data;
+          })
+      },
+
+
+
+
     qiehuantype(val){
       this.licaitype=val;
       if(val==0){
@@ -265,6 +276,7 @@ export default {
         this.licai=result;
       })
     },
+
     selectbypage(val){
       console.log("发起请求获得大额贷款信息：")
       this.axios({url:'http://localhost:10086/bigdaiall_home',method:"post",withCredentials:true,data:{pageNo:val,pageSize:4}}).then(res=>{
@@ -347,6 +359,8 @@ export default {
 
   data:function() {
     return {
+      xinwen:[],//存放新闻
+
       smadaimsg:{
         zonged:'',
         kejie:'',
@@ -383,7 +397,12 @@ export default {
   created(){
     this.smadaiinfo();
     this.selectbypage(1);
+
+    this.PageRefresh();
+    this.show();
+
     this.getallmoneypro(1);
+
   },
   components: {
     Bottom
