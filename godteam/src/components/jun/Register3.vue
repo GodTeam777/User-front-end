@@ -110,7 +110,7 @@
                         // alert(res.data())
                         // alert(res.data().i)
 
-                        if (res.data.i==1) {
+                        if (res.data==1) {
 
                             const h = this.$createElement;
 

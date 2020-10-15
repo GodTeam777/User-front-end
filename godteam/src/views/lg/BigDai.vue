@@ -53,13 +53,17 @@
                             <td rowspan="4"  style="width: 20%;text-align: center"> <el-image style="width: 100px;height: 100px" :src="dai.url" fit="fill"></el-image></td>
                             <td width="40%">产品名: <span style="font-weight: 600">{{dai.bdname}}</span></td>
                             <td width="40%">放款周期：{{dai.bddate}}个月</td>
-                            <td rowspan="4"><el-button type="primary" @click="toinfo">查看详情</el-button></td>
+                            <td rowspan="4"><el-button type="primary" @click="toinfo(dai.bdid)">查看详情</el-button></td>
                         </tr>
                         <tr><td>放款金额：{{dai.small_money}}-{{dai.big_money}}</td>
                             <td>利率（年利化率）：<span style="color: red">{{dai.interest}}%</span></td></tr>
                         <tr>
                             <td colspan="2">
-                                贷款条件：<el-tag size="mini">身份认证</el-tag>
+                                贷款条件：
+                                <el-tag v-if="dai.bigvlidateidcard==1" size="mini" style="margin-left: 5px">身份认证</el-tag>
+                                <el-tag v-if="dai.bigvlidatexueli==1" size="mini" style="margin-left: 5px">学历认证</el-tag>
+                                <el-tag v-if="dai.bigvlidatecheliang==1" size="mini" style="margin-left: 5px">车辆认证</el-tag>
+                                <el-tag v-if="dai.bigvlidatehome==1" size="mini" style="margin-left: 5px">房屋认证</el-tag>
                             </td>
                         </tr>
                         <tr>
@@ -73,7 +77,7 @@
                 </div>
                 <div style="width: 100%;float: left;text-align: center;margin-top: 20px">
                     <el-pagination
-                            @size-change="handleSizeChange"
+                            @size-change="selectbypageSize"
                             @current-change="selectbypage"
                             :current-page.sync="pageNo"
                             :page-sizes="[2, 4, 6, 8]"
@@ -93,15 +97,16 @@
           this.selectbypage(1);
         },
         methods:{
-            toinfo(){
-                this.$router.push({path: '/bigDai_info', params: {}});
+            toinfo(val){
+                this.$router.push({path: '/bigDai_info', query: {bdid:val}});
             },
             selectbypage(val){
                 console.log("发起请求获得大额贷款信息：")
+                this.pageNo=val;
                 this.axios({url:'http://localhost:10086/bigdaiall_home',method:"post",
                     withCredentials:true,
                     data:{
-                    pageNo:val,
+                    pageNo:this.pageNo,
                     pageSize:this.pageSize,
                     seach_type:this.type,
                     seach_date:this.big_Date,
@@ -119,6 +124,49 @@
                             small_money:res.data.data[i].big.smallMoney,
                             big_money:res.data.data[i].big.bigMoney,
                             bigdaiTitle:res.data.data[i].big.bigdaiTitle,
+                            bigvlidateidcard:res.data.data[i].vlidate.idcard,
+                            bigvlidatexueli:res.data.data[i].vlidate.xueli,
+                            bigvlidatecheliang:res.data.data[i].vlidate.cheliang,
+                            bigvlidatehome:res.data.data[i].vlidate.home,
+                            bdid:res.data.data[i].big.bdid,
+                            url: "http://localhost:10086/img/"+res.data.data[i].big.bdpath
+                        }
+                        result.push(chil)
+                    }
+                    this.total=res.data.totalRecords
+                    this.bigdai=result;
+                });
+            },
+            selectbypageSize(val){
+                this.pageNo=1;
+                this.pageSize=val;
+                console.log("发起请求获得大额贷款信息：")
+                this.axios({url:'http://localhost:10086/bigdaiall_home',method:"post",
+                    withCredentials:true,
+                    data:{
+                        pageNo:this.pageNo,
+                        pageSize:this.pageSize,
+                        seach_type:this.type,
+                        seach_date:this.big_Date,
+                        seach_lilv1:this.big_lilv.split('-')[0],
+                        seach_lilv2:this.big_lilv.split('-')[1],
+                        seach_money1:this.big_ed.split('-')[0],
+                        seach_money2:this.big_ed.split('-')[1]}
+                }).then(res=>{
+                    var result=new Array();
+                    for (var i = 0; i <res.data.data.length ; i++) {
+                        var chil={
+                            bdname:res.data.data[i].big.bdname,
+                            interest:res.data.data[i].big.interest,
+                            bddate:res.data.data[i].big.bddate,
+                            small_money:res.data.data[i].big.smallMoney,
+                            big_money:res.data.data[i].big.bigMoney,
+                            bigdaiTitle:res.data.data[i].big.bigdaiTitle,
+                            bigvlidateidcard:res.data.data[i].vlidate.idcard,
+                            bigvlidatexueli:res.data.data[i].vlidate.xueli,
+                            bigvlidatecheliang:res.data.data[i].vlidate.cheliang,
+                            bigvlidatehome:res.data.data[i].vlidate.home,
+                            bdid:res.data.data[i].big.bdid,
                             url: "http://localhost:10086/img/"+res.data.data[i].big.bdpath
                         }
                         result.push(chil)
