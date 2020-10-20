@@ -11,7 +11,7 @@
                             <table border="0" style="width: 100%;">
                                 <tr>
                                     <td>
-                                        <span style="font-size: 120%"><router-link class="newsA" to="/newsInfo">{{my.newsTitle}}</router-link></span>
+                                        <span style="font-size: 120%"><router-link class="newsA"  :to="{path:'/newsInfo',query: {name: my.nid}}" >{{my.newsTitle}}</router-link></span>
                                     </td>
                                     <td style="text-align: right">
                                         {{my.newsDate}}
@@ -26,7 +26,7 @@
                         <table border="0" style="width: 100%;">
                             <tr>
                                 <td>
-                                    <span style="font-size: 120%"><a class="newsA" href="#">{{my.newsTitle}}</a></span>
+                                    <span style="font-size: 120%"><router-link class="newsA"  :to="{path:'/newsInfo',query: {name: my.nid}}" >{{my.newsTitle}}</router-link></span>
                                 </td>
                                 <td style="text-align: right">
                                     {{my.newsDate}}
@@ -43,7 +43,7 @@
                         <table border="0" style="width: 100%;">
                             <tr>
                                 <td>
-                                    <span style="font-size: 120%"><a class="newsA" href="#">{{my.newsTitle}}</a></span>
+                                    <span style="font-size: 120%"><router-link class="newsA"  :to="{path:'/newsInfo',query: {name: my.nid}}" >{{my.newsTitle}}</router-link></span>
                                 </td>
                                 <td style="text-align: right">
                                     {{my.newsDate}}
@@ -76,32 +76,57 @@
                 this.axios.get('http://localhost:10086/selectAll').then(res=>{
                     this.list=res.data;
                     //时间处理
-                    let date4=new Date(this.list.newsDate);
-                    let d4;
-                    if(date4.getDate()>10){
-                        d4=date4.getDate()
-                    }else{
-                        d4="0"+date4.getDate()
-                    }
-                    let m4;
-                    if((date4.getMonth()+1)>10){
-                        m4=(date4.getMonth()+1)
-                    }else{
-                        m4="0"+(date4.getMonth()+1)
-                    }
-                    this.list.newsDate=date4.getFullYear()+"-"+m+"-"+d;
+                   this.list.forEach(res=>{
+                       let date=new Date(res.newsDate);
+                       let y=date.getFullYear();
+                       let m=(date.getMonth()+1);
+                       let d=date.getDate();
+                       if(m<10){
+                           m="0"+m;
+                       }
+                       if(d<10){
+                           d="0"+d;
+                       }
+                       res.newsDate=y+"-"+m+"-"+d;
+                   })
                 })
             },
             //新闻查看类型2
             select:function(){
                 this.axios.get('http://localhost:10086/selectAllType').then(res=>{
                     this.listtype=res.data;
+                    this.listtype.forEach(res=>{
+                        let date=new Date(res.newsDate);
+                        let y=date.getFullYear();
+                        let m=(date.getMonth()+1);
+                        let d=date.getDate();
+                        if(m<10){
+                            m="0"+m;
+                        }
+                        if(d<10){
+                            d="0"+d;
+                        }
+                        res.newsDate=y+"-"+m+"-"+d;
+                    })
                 })
             },
             //新闻查看类型3
             selectmytype:function(){
                 this.axios.get('http://localhost:10086/selectByTypeAll').then(res=>{
                     this.listmytype=res.data;
+                    this.listmytype.forEach(res=>{
+                        let date=new Date(res.newsDate);
+                        let y=date.getFullYear();
+                        let m=(date.getMonth()+1);
+                        let d=date.getDate();
+                        if(m<10){
+                            m="0"+m;
+                        }
+                        if(d<10){
+                            d="0"+d;
+                        }
+                        res.newsDate=y+"-"+m+"-"+d;
+                    })
                 })
             },
             handleClick(tab, event) {

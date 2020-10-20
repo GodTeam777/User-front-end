@@ -16,10 +16,11 @@
 
 
 
-          <li><span style="position: absolute;margin-left: 19%;font-weight: 600;"><i style="color: rgba(213,59,33,0.85);"></i></span><a href="#" class="smallDai" style="font-size: 15px">{{my.newsTitle}}</a><br/><hr/></li>
+          <li><span style="position: absolute;margin-left: 19%;font-weight: 600;"><i style="color: rgba(213,59,33,0.85);"></i></span><a :href="getGoodsHref(my.nid)" class="smallDai" style="font-size: 15px">{{my.newsTitle}}</a><br/><hr/></li>
 
         </ul> </div>
-        <span style="margin-left: 58%"><a href="#" class="smallDai" style="font-size: 15px">了解更多>>></a></span>
+
+        <span style="margin-left: 58%"><router-link class="newsA"  to='/news' >了解更多>>></router-link></span>
       </div>
 
     <div style="text-align: left;width: 700px;margin-top:10px;margin-left:5%;float: left;border: 1px  red">
@@ -236,10 +237,15 @@ import Bottom from "@/components/lg/Bottom";
 export default {
   name: 'Home',
   methods:{
+    //获取超链接id
+    getGoodsHref:function(val){
+      return 'http://localhost:8080/newsInfo?name='+val
+    },
+
 
       //新闻查看
       show:function(){
-          this.axios.get('http://localhost:10086/selectAll').then(res=>{
+          this.axios.get('http://localhost:10086/queryMyAll').then(res=>{
            this.xinwen=res.data;
           })
       },
